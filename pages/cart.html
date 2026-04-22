@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Furniro - Cart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../sources/header.css">
+  <link rel="stylesheet" href="../sources/footer.css">
+  <link rel="stylesheet" href="../sources/cart.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="nav-container">
+        <a href="homepage.html" class="logo">
+          <img src="../assets/logo.png" alt="Furniro Logo">
+          <span>Furniro</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="homepage.html">Home</a></li>
+          <li><a href="Shop.html">Shop</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div class="nav-icons">
+          <a href="#" title="Account">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M23.3333 14V8.16669H25.6666V15.1667H23.3333M23.3333 19.8334H25.6666V17.5H23.3333M11.6666 15.1667C14.7816 15.1667 20.9999 16.73 20.9999 19.8334V23.3334H2.33325V19.8334C2.33325 16.73 8.55159 15.1667 11.6666 15.1667ZM11.6666 4.66669C12.9043 4.66669 14.0912 5.15835 14.9664 6.03352C15.8416 6.90869 16.3333 8.09568 16.3333 9.33335C16.3333 10.571 15.8416 11.758 14.9664 12.6332C14.0912 13.5084 12.9043 14 11.6666 14C10.4289 14 9.24192 13.5084 8.36675 12.6332C7.49158 11.758 6.99992 10.571 6.99992 9.33335C6.99992 8.09568 7.49158 6.90869 8.36675 6.03352C9.24192 5.15835 10.4289 4.66669 11.6666 4.66669ZM11.6666 17.3834C8.20159 17.3834 4.54992 19.0867 4.54992 19.8334V21.1167H18.7833V19.8334C18.7833 19.0867 15.1316 17.3834 11.6666 17.3834ZM11.6666 6.88335C11.0168 6.88335 10.3936 7.14148 9.93417 7.60094C9.47471 8.06041 9.21659 8.68357 9.21659 9.33335C9.21659 9.98313 9.47471 10.6063 9.93417 11.0658C10.3936 11.5252 11.0168 11.7834 11.6666 11.7834C12.3164 11.7834 12.9395 11.5252 13.399 11.0658C13.8585 10.6063 14.1166 9.98313 14.1166 9.33335C14.1166 8.68357 13.8585 8.06041 13.399 7.60094C12.9395 7.14148 12.3164 6.88335 11.6666 6.88335Z"
+                fill="currentColor" />
+            </svg>
+          </a>
+          <a href="#" title="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
+          <a href="#" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
+          <a href="cart.html" title="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+        </div>
+    </header>
+
+    <main>
+
+      <section class="hero" style="--hero-image: url('../assets/pic_cart.jpg');">
+        <div class="hero__content">
+          <img src="../assets/Meubel House_Logos-05.png" alt="Furniro Logo" class="hero__mark">
+
+          <h1 class="hero__title">Cart</h1>
+
+          <div class="hero__crumbs" aria-label="Breadcrumb">
+            <span class="crumb">Home</span>
+            <span class="crumb__sep">›</span>
+            <span class="crumb crumb--current">Cart</span>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="cart-area">
+        <div class="cart-area__container">
+
+
+          <div class="cart-table">
+            <div class="cart-table__header">
+              <div>Product</div>
+              <div>Price</div>
+              <div>Quantity</div>
+              <div>Subtotal</div>
+            </div>
+
+            <div class="cart-table__row">
+              <div class="cart-table__product">
+                <div class="cart-table__thumb">
+                  <img src="../assets/sofa_cart.png" alt="Asgaard sofa">
+                </div>
+                <div class="cart-table__name">Asgaard sofa</div>
+              </div>
+
+              <div class="cart-table__cell cart-table__muted js-cart-price" data-price="250000">Rs. 250,000.00</div>
+
+              <div class="cart-table__cell">
+                <input class="cart-table__qty js-cart-qty" type="number" value="1" min="1">
+              </div>
+
+              <div class="cart-table__cell cart-table__subtotal">
+                <span class="js-cart-item-subtotal">Rs. 250,000.00</span>
+
+                <button class="cart-table__remove" aria-label="Remove">
+
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 3h6l1 2h4v2H4V5h4l1-2Z"></path>
+                    <path d="M6 9h12l-1 12H7L6 9Z"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <aside class="cart-totals">
+            <h2 class="cart-totals__title">Cart Totals</h2>
+
+            <div class="cart-totals__rows">
+              <div class="cart-totals__row">
+                <div class="cart-totals__label">Subtotal</div>
+                <div class="cart-totals__value cart-totals__muted js-cart-subtotal">Rs. 250,000.00</div>
+              </div>
+
+              <div class="cart-totals__row">
+                <div class="cart-totals__label">Total</div>
+                <div class="cart-totals__value cart-totals__total js-cart-total">Rs. 250,000.00</div>
+              </div>
+            </div>
+
+            <button class="cart-totals__btn" onclick="window.location.href='checkout.html'">Check Out</button>
+          </aside>
+
+        </div>
+      </section>
+
+      <section class="benefits">
+        <div class="benefits__wrap">
+
+          <div class="benefit">
+            <div class="benefit__icon">
+              <img src="../assets/trophy.png" alt="High Quality" class="benefit__icon-img">
+            </div>
+            <div class="benefit__text">
+              <div class="benefit__title">High Quality</div>
+              <div class="benefit__sub">crafted from top materials</div>
+            </div>
+          </div>
+
+          <div class="benefit">
+            <div class="benefit__icon">
+              <img src="../assets/warranty.png" alt="Warranty Protection" class="benefit__icon-img">
+            </div>
+            <div class="benefit__text">
+              <div class="benefit__title">Warranty Protection</div>
+              <div class="benefit__sub">Over 2 years</div>
+            </div>
+          </div>
+
+          <div class="benefit">
+            <div class="benefit__icon">
+              <img src="../assets/shipping.png" alt="Free Shipping" class="benefit__icon-img">
+            </div>
+            <div class="benefit__text">
+              <div class="benefit__title">Free Shipping</div>
+              <div class="benefit__sub">Order over 150 $</div>
+            </div>
+          </div>
+
+          <div class="benefit">
+            <div class="benefit__icon">
+              <img src="../assets/support.png" alt="24 / 7 Support" class="benefit__icon-img">
+            </div>
+            <div class="benefit__text">
+              <div class="benefit__title">24 / 7 Support</div>
+              <div class="benefit__sub">Dedicated support</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <footer class="site-footer">
+        <div class="footer-container">
+          <!-- Column 1: Brand & Address -->
+          <div class="footer-column footer-brand">
+            <h2 class="footer-logo">Funiro.</h2>
+            <address>
+              400 University Drive Suite 200 Coral Gables,<br>
+              FL 33134 USA
+            </address>
+          </div>
+
+          <!-- Column 2: Links -->
+          <div class="footer-column footer-links">
+            <h3 class="footer-title">Links</h3>
+            <ul>
+              <li><a href="homepage.html">Home</a></li>
+              <li><a href="Shop.html">Shop</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Help -->
+          <div class="footer-column footer-help">
+            <h3 class="footer-title">Help</h3>
+            <ul>
+              <li><a href="#">Payment Options</a></li>
+              <li><a href="#">Returns</a></li>
+              <li><a href="#">Privacy Policies</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Newsletter -->
+          <div class="footer-column footer-newsletter">
+            <h3 class="footer-title">Newsletter</h3>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Enter Your Email Address" required>
+              <button type="submit">SUBSCRIBE</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="bottom-border"></div>
+          <p>2023 furino. All rights reserved</p>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const subtotalEl = document.querySelector('.js-cart-subtotal');
+      const totalEl = document.querySelector('.js-cart-total');
+
+      function formatCurrency(value) {
+        return 'Rs. ' + value.toLocaleString('en-IN', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+      }
+
+      function updateTotals() {
+        let grandTotal = 0;
+        const rows = document.querySelectorAll('.cart-table__row');
+
+        rows.forEach(row => {
+          const priceEl = row.querySelector('.js-cart-price');
+          if (!priceEl) return;
+
+          const price = parseFloat(priceEl.dataset.price);
+          const qtyInput = row.querySelector('.js-cart-qty');
+          const qty = parseInt(qtyInput.value) || 0;
+          const subtotal = price * qty;
+
+          const itemSubtotalEl = row.querySelector('.js-cart-item-subtotal');
+          if (itemSubtotalEl) itemSubtotalEl.textContent = formatCurrency(subtotal);
+          grandTotal += subtotal;
+        });
+
+        if (subtotalEl) subtotalEl.textContent = formatCurrency(grandTotal);
+        if (totalEl) totalEl.textContent = formatCurrency(grandTotal);
+      }
+
+
+      document.body.addEventListener('input', (e) => {
+        if (e.target.classList.contains('js-cart-qty')) {
+          updateTotals();
+        }
+      });
+
+      document.body.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.cart-table__remove');
+        if (removeBtn) {
+          const row = removeBtn.closest('.cart-table__row');
+          if (row) {
+            row.remove();
+            updateTotals();
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

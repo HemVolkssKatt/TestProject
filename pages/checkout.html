@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniro - Checkout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../sources/header.css">
+    <link rel="stylesheet" href="../sources/footer.css">
+    <link rel="stylesheet" href="../sources/checkout.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="homepage.html" class="logo">
+                <img src="../assets/logo.png" alt="Furniro Logo">
+                <span>Furniro</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="Shop.html">Shop</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <div class="nav-icons">
+                <a href="#" title="Account">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23.3333 14V8.16669H25.6666V15.1667H23.3333M23.3333 19.8334H25.6666V17.5H23.3333M11.6666 15.1667C14.7816 15.1667 20.9999 16.73 20.9999 19.8334V23.3334H2.33325V19.8334C2.33325 16.73 8.55159 15.1667 11.6666 15.1667ZM11.6666 4.66669C12.9043 4.66669 14.0912 5.15835 14.9664 6.03352C15.8416 6.90869 16.3333 8.09568 16.3333 9.33335C16.3333 10.571 15.8416 11.758 14.9664 12.6332C14.0912 13.5084 12.9043 14 11.6666 14C10.4289 14 9.24192 13.5084 8.36675 12.6332C7.49158 11.758 6.99992 10.571 6.99992 9.33335C6.99992 8.09568 7.49158 6.90869 8.36675 6.03352C9.24192 5.15835 10.4289 4.66669 11.6666 4.66669ZM11.6666 17.3834C8.20159 17.3834 4.54992 19.0867 4.54992 19.8334V21.1167H18.7833V19.8334C18.7833 19.0867 15.1316 17.3834 11.6666 17.3834ZM11.6666 6.88335C11.0168 6.88335 10.3936 7.14148 9.93417 7.60094C9.47471 8.06041 9.21659 8.68357 9.21659 9.33335C9.21659 9.98313 9.47471 10.6063 9.93417 11.0658C10.3936 11.5252 11.0168 11.7834 11.6666 11.7834C12.3164 11.7834 12.9395 11.5252 13.399 11.0658C13.8585 10.6063 14.1166 9.98313 14.1166 9.33335C14.1166 8.68357 13.8585 8.06041 13.399 7.60094C12.9395 7.14148 12.3164 6.88335 11.6666 6.88335Z" fill="currentColor"/>
+                    </svg>
+                </a>
+                <a href="#" title="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="#" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
+                <a href="cart.html" title="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="overlay">
+            <img src="../assets/logo.png" alt="Small Logo" class="hero-logo">
+            <h1>Checkout</h1>
+            <p>Home &gt; Checkout</p>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="checkout-container">
+
+            <!-- Left: Billing Details Form -->
+            <div class="billing-form">
+                <h2 class="billing-title">Billing details</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="company">Company Name (Optional)</label>
+                    <input type="text" id="company" name="company">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="country">Country / Region</label>
+                    <div class="select-wrapper">
+                        <select id="country" name="country">
+                            <option value="sl">Sri Lanka</option>
+                            <option value="in">India</option>
+                            <option value="us">United States</option>
+                            <option value="uk">United Kingdom</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="street">Street address</label>
+                    <input type="text" id="street" name="street">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="city">Town / City</label>
+                    <input type="text" id="city" name="city">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="province">Province</label>
+                    <div class="select-wrapper">
+                        <select id="province" name="province">
+                            <option value="wp">Western Province</option>
+                            <option value="cp">Central Province</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="zip">ZIP code</label>
+                    <input type="text" id="zip" name="zip">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" name="email">
+                </div>
+
+                <div class="form-group full-width">
+                    <input type="text" id="addInfo" name="addInfo" placeholder="Additional information">
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div class="order-summary">
+
+                <div class="summary-header">
+                    <span>Product</span>
+                    <span>Subtotal</span>
+                </div>
+
+                <div class="summary-item">
+                    <span class="product-name">Asgaard sofa <span class="product-qty">× <input type="number"
+                                id="quantity" value="1" min="1" class="qty-input"></span></span>
+                    <span class="product-price" id="itemPrice">Rs. 250,000.00</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">Rs. 250,000.00</span>
+                </div>
+
+                <div class="summary-row total-row">
+                    <span>Total</span>
+                    <span class="total-price" id="total">Rs. 250,000.00</span>
+                </div>
+
+                <hr class="summary-divider">
+
+                <!-- Payment Options -->
+                <div class="payment-option">
+                    <label class="payment-label active">
+                        <input type="radio" name="payment" value="bank" checked>
+                        <span class="radio-dot filled"></span>
+                        Direct Bank Transfer
+                    </label>
+                    <p class="payment-desc">
+                        Make your payment directly into our bank account. Please use your Order ID as the payment
+                        reference. Your order will not be shipped until the funds have cleared in our account.
+                    </p>
+                </div>
+
+                <div class="payment-option">
+                    <label class="payment-label">
+                        <input type="radio" name="payment" value="bank2">
+                        <span class="radio-dot"></span>
+                        Direct Bank Transfer
+                    </label>
+                </div>
+
+                <div class="payment-option">
+                    <label class="payment-label">
+                        <input type="radio" name="payment" value="cod">
+                        <span class="radio-dot"></span>
+                        Cash On Delivery
+                    </label>
+                </div>
+
+                <p class="privacy-text">
+                    Your personal data will be used to support your experience throughout this website, to manage access
+                    to your account, and for other purposes described in our <strong>privacy policy.</strong>
+                </p>
+
+                <button class="place-order-btn" type="button" id="placeOrderBtn">Place order</button>
+
+                <div id="orderSuccessMsg" class="success-message" style="display: none;">
+                    Order successfully placed! Your order is being processed.
+                </div>
+                
+                <div id="orderErrorMsg" class="error-message" style="display: none;">
+                    Order not placed. Please fill in all required fields.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Features Bar -->
+    <section class="features-bar">
+        <div class="feature-item">
+            <img src="../assets/cup.png" alt="High Quality Icon" class="feature-icon">
+            <div class="feature-text">
+                <h3>High Quality</h3>
+                <p>crafted from top materials</p>
+            </div>
+        </div>
+
+        <div class="feature-item">
+            <img src="../assets/guarantee.png" alt="Warranty Protection Icon" class="feature-icon">
+            <div class="feature-text">
+                <h3>Warranty Protection</h3>
+                <p>Over 2 years</p>
+            </div>
+        </div>
+
+        <div class="feature-item">
+            <img src="../assets/shipping.png" alt="Free Shipping Icon" class="feature-icon">
+            <div class="feature-text">
+                <h3>Free Shipping</h3>
+                <p>Order over 150 $</p>
+            </div>
+        </div>
+
+        <div class="feature-item">
+            <img src="../assets/customers.png" alt="24/7 Support Icon" class="feature-icon">
+            <div class="feature-text">
+                <h3>24 / 7 Support</h3>
+                <p>Dedicated support</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Standardized Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column footer-brand">
+                <h2 class="footer-logo">Funiro.</h2>
+                <address>
+                    400 University Drive Suite 200 Coral Gables,<br>
+                    FL 33134 USA
+                </address>
+            </div>
+
+            <div class="footer-column footer-links">
+                <h3 class="footer-title">Links</h3>
+                <ul>
+                    <li><a href="homepage.html">Home</a></li>
+                    <li><a href="Shop.html">Shop</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column footer-help">
+                <h3 class="footer-title">Help</h3>
+                <ul>
+                    <li><a href="#">Payment Options</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Privacy Policies</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column footer-newsletter">
+                <h3 class="footer-title">Newsletter</h3>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter Your Email Address" required>
+                    <button type="submit">SUBSCRIBE</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="bottom-border"></div>
+            <p>2023 furino. All rights reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        // Payment Radio Toggle
+        const paymentLabels = document.querySelectorAll(".payment-label");
+        paymentLabels.forEach(label => {
+            label.addEventListener("click", function () {
+                paymentLabels.forEach(l => l.classList.remove("active"));
+                paymentLabels.forEach(l => l.querySelector(".radio-dot").classList.remove("filled"));
+
+                this.classList.add("active");
+                this.querySelector(".radio-dot").classList.add("filled");
+            });
+        });
+
+        // Dynamic Price Update
+        const qtyInput = document.getElementById('quantity');
+        const itemPriceSpan = document.getElementById('itemPrice');
+        const subtotalSpan = document.getElementById('subtotal');
+        const totalSpan = document.getElementById('total');
+        const unitPrice = 250000;
+
+        function updatePrices() {
+            const qty = parseInt(qtyInput.value) || 1;
+            const totalAmount = qty * unitPrice;
+            const formattedAmount = "Rs. " + totalAmount.toLocaleString('en-IN', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+            itemPriceSpan.textContent = formattedAmount;
+            subtotalSpan.textContent = formattedAmount;
+            totalSpan.textContent = formattedAmount;
+        }
+
+        qtyInput.addEventListener('input', updatePrices);
+
+        // Place Order Logic
+        const placeOrderBtn = document.getElementById('placeOrderBtn');
+        const successMsg = document.getElementById('orderSuccessMsg');
+        const errorMsg = document.getElementById('orderErrorMsg');
+        const requiredFields = ['firstName', 'lastName', 'street', 'city', 'zip', 'phone', 'email'];
+
+        placeOrderBtn.addEventListener('click', function() {
+            let allFilled = true;
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'red';
+                    allFilled = false;
+                } else {
+                    field.style.borderColor = '#9F9F9F';
+                }
+            });
+
+            if (allFilled) {
+                successMsg.style.display = 'block';
+                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                placeOrderBtn.disabled = true;
+                placeOrderBtn.style.opacity = '0.7';
+                placeOrderBtn.textContent = 'Order Placed';
+            } else {
+                errorMsg.style.display = 'block';
+                errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    </script>
+</body>
+</html>
