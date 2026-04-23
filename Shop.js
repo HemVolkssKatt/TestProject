@@ -1,6 +1,3 @@
-
-const TOTAL_RESULTS = products.length;
-
 const productGrid = document.getElementById("productGrid");
 const showSelect = document.getElementById("showSelect");
 const sortSelect = document.getElementById("sortSelect");
@@ -18,7 +15,7 @@ const rangeFill = document.getElementById("rangeFill");
 const rangeMinText = document.getElementById("rangeMinText");
 const rangeMaxText = document.getElementById("rangeMaxText");
 
-let filteredTotal = products.length;
+let filteredTotal = typeof products !== 'undefined' ? products.length : 0;
 let currentSearchQuery = "";
 let currentPage = 1;
 
@@ -27,11 +24,29 @@ function getWishlist() {
   return wishlist ? JSON.parse(wishlist) : [];
 }
 
+function isProductLiked(productId) {
+  const wishlist = getWishlist();
+  return wishlist.some(item => {
+    if (typeof item === 'object' && item !== null) return item.id === productId;
+    return item === productId;
+  });
+}
+
 function toggleWishlist(productId) {
   let wishlist = getWishlist();
-  const index = wishlist.indexOf(productId);
+  const index = wishlist.findIndex(item => {
+    if (typeof item === 'object' && item !== null) return item.id === productId;
+    return item === productId;
+  });
+
   if (index === -1) {
-    wishlist.push(productId);
+    if (typeof products !== 'undefined') {
+      const product = products.find(p => p.id === productId);
+      if (product) wishlist.push(product);
+      else wishlist.push(productId);
+    } else {
+      wishlist.push(productId);
+    }
   } else {
     wishlist.splice(index, 1);
   }
@@ -52,13 +67,11 @@ function matchesSearch(p, query) {
   const q = query.toLowerCase().trim();
   const searchWords = q.split(/\s+/);
   
-  // A product matches if EVERY word in the search query matches either the name, subtitle, or a keyword
   return searchWords.every(word => {
     const inName = p.name.toLowerCase().includes(word);
     const inSubtitle = p.subtitle && p.subtitle.toLowerCase().includes(word);
     const inKeywords = Array.isArray(p.keywords) && p.keywords.some(k => {
       const lowerK = k.toLowerCase();
-      // Match if keyword is the word, or if it's a common prefix (e.g. "chair" matches "chairs")
       return lowerK === word || lowerK.startsWith(word) || lowerK.includes(" " + word);
     });
     return inName || inSubtitle || inKeywords;
@@ -66,8 +79,17 @@ function matchesSearch(p, query) {
 }
 
 function getVisibleProducts() {
+  if (typeof products === 'undefined') return [];
+  
   const perPage = showSelect ? Number(showSelect.value) || products.length : products.length;
   let items = [...products];
+
+  // URL Parameters (Category filtering)
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedCategory = urlParams.get("category");
+  if (selectedCategory) {
+    items = items.filter(p => p.category === selectedCategory);
+  }
 
   if (currentSearchQuery && currentSearchQuery.trim() !== "") {
     items = items.filter(p => matchesSearch(p, currentSearchQuery));
@@ -107,6 +129,7 @@ function getVisibleProducts() {
 
   return items.slice(0, perPage);
 }
+
 function initializeSearch() {
   const searchInput = document.getElementById("searchInput");
   if (!searchInput) return;
@@ -116,17 +139,14 @@ function initializeSearch() {
   if (urlQuery) {
     searchInput.value = urlQuery;
     currentSearchQuery = urlQuery;
-    window.currentSearchQuery = urlQuery;
     const navSearch = document.getElementById("navSearch");
     if (navSearch) navSearch.classList.add("is-open");
-    renderProducts(); // re-render with the URL search query applied
+    renderProducts();
   }
 
   searchInput.addEventListener("input", (e) => {
     currentSearchQuery = e.target.value;
-    window.currentSearchQuery = e.target.value;
     currentPage = 1;
-    window.currentPage = 1;
     renderProducts();
   });
 
@@ -134,10 +154,8 @@ function initializeSearch() {
   if (searchCloseBtn) {
     searchCloseBtn.addEventListener("click", () => {
       currentSearchQuery = "";
-      window.currentSearchQuery = "";
       searchInput.value = "";
       currentPage = 1;
-      window.currentPage = 1;
       renderProducts();
     });
   }
@@ -161,7 +179,7 @@ function renderProducts() {
         <article class="product-card" data-id="${p.id}" data-name="${p.name}">
           <div class="product-card__media">
             ${badgeHtml}
-            <a href="product.html">
+            <a href="product.html?id=${p.id}">
               <img src="${p.image}" alt="${p.name}">
             </a>
             <div class="product-card__overlay">
@@ -185,9 +203,9 @@ function renderProducts() {
                   </svg>
                   Compare
                 </a>
-                <button class="action-link ${getWishlist().includes(p.id) ? 'is-liked' : ''}" type="button" data-action="like" data-id="${p.id}">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="${getWishlist().includes(p.id) ? 'red' : 'none'}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 21s-7-4.6-9.3-9.1C1 8.5 3.2 6 6.2 6c1.7 0 3.2.9 3.8 2 .6-1.1 2.1-2 3.8-2 3 0 5.2 2.5 3.5 5.9C19 16.4 12 21 12 21Z" stroke="${getWishlist().includes(p.id) ? 'red' : 'currentColor'}" stroke-width="2" stroke-linejoin="round"/>
+                <button class="action-link ${isProductLiked(p.id) ? 'is-liked' : ''}" type="button" data-action="like" data-id="${p.id}">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="${isProductLiked(p.id) ? 'red' : 'none'}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 21s-7-4.6-9.3-9.1C1 8.5 3.2 6 6.2 6c1.7 0 3.2.9 3.8 2 .6-1.1 2.1-2 3.8-2 3 0 5.2 2.5 3.5 5.9C19 16.4 12 21 12 21Z" stroke="${isProductLiked(p.id) ? 'red' : 'currentColor'}" stroke-width="2" stroke-linejoin="round"/>
                   </svg>
                   Like
                 </button>
@@ -200,10 +218,7 @@ function renderProducts() {
             <p class="product-sub">${p.subtitle}</p>
             <div class="price-row">
               <span class="price">${formatRupiah(p.price)}</span>
-              ${p.oldPrice
-          ? `<span class="price-old">${formatRupiah(p.oldPrice)}</span>`
-          : ""
-        }
+              ${p.oldPrice ? `<span class="price-old">${formatRupiah(p.oldPrice)}</span>` : ""}
             </div>
           </div>
         </article>
@@ -226,29 +241,10 @@ function updateResultsText() {
   }
 }
 
-if (showSelect) {
-  showSelect.addEventListener("change", () => {
-    renderProducts();
-  });
-}
-
-if (sortSelect) {
-  sortSelect.addEventListener("change", () => {
-    renderProducts();
-  });
-}
-
-if (discountToggle) {
-  discountToggle.addEventListener("change", () => {
-    renderProducts();
-  });
-}
-
-if (newToggle) {
-  newToggle.addEventListener("change", () => {
-    renderProducts();
-  });
-}
+if (showSelect) showSelect.addEventListener("change", () => renderProducts());
+if (sortSelect) sortSelect.addEventListener("change", () => renderProducts());
+if (discountToggle) discountToggle.addEventListener("change", () => renderProducts());
+if (newToggle) newToggle.addEventListener("change", () => renderProducts());
 
 function updateRange() {
   if (!minRange || !maxRange || !rangeFill) return;
@@ -256,7 +252,6 @@ function updateRange() {
   let minVal = parseInt(minRange.value);
   let maxVal = parseInt(maxRange.value);
 
-  // Visual swap for the fill bar if handles cross
   const visualMin = Math.min(minVal, maxVal);
   const visualMax = Math.max(minVal, maxVal);
 
@@ -275,7 +270,6 @@ function updateRange() {
 if (minRange) minRange.addEventListener("input", updateRange);
 if (maxRange) maxRange.addEventListener("input", updateRange);
 
-// Initialize slider on load
 updateRange();
 
 if (filterBtn && filterPanel) {
@@ -286,18 +280,6 @@ if (filterBtn && filterPanel) {
   });
 }
 
-viewButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    viewButtons.forEach((b) => b.classList.remove("is-active"));
-    btn.classList.add("is-active");
-
-    const view = btn.dataset.view;
-    if (productGrid && view) {
-      productGrid.dataset.view = view;
-    }
-  });
-});
-
 if (menuBtn && primaryNav) {
   menuBtn.addEventListener("click", () => {
     primaryNav.classList.toggle("is-open");
@@ -305,13 +287,6 @@ if (menuBtn && primaryNav) {
 }
 
 document.addEventListener("click", (e) => {
-  const cartBtn = e.target.closest(".btn-cart");
-  if (cartBtn) {
-    const card = cartBtn.closest(".product-card");
-    const name = card && card.dataset && card.dataset.name ? card.dataset.name : "Product";
-    alert(`${name} added to cart`);
-  }
-
   const likeBtn = e.target.closest('[data-action="like"]');
   if (likeBtn) {
     const id = parseInt(likeBtn.dataset.id);
@@ -320,22 +295,18 @@ document.addEventListener("click", (e) => {
   }
 });
 
-renderProducts();
-
-
 function initializeViewToggle() {
   const viewButtons = document.querySelectorAll("[data-view]");
-  const productGrid = document.getElementById("productGrid");
-
   if (!productGrid || viewButtons.length === 0) return;
 
   const savedView = localStorage.getItem("productView") || "grid";
-
+  const currentView = savedView === "list" ? "list-view" : "grid-view";
+  
   productGrid.classList.remove("grid-view", "list-view");
-  productGrid.classList.add(savedView === "list" ? "list-view" : "grid-view");
+  productGrid.classList.add(currentView);
 
   viewButtons.forEach((btn) => {
-    btn.classList.toggle("is-active", btn.dataset.view === savedView);
+    btn.classList.toggle("is-active", btn.dataset.view === (savedView || "grid"));
   });
 
   viewButtons.forEach((btn) => {
@@ -350,10 +321,7 @@ function initializeViewToggle() {
       productGrid.classList.add(view === "list" ? "list-view" : "grid-view");
 
       localStorage.setItem("productView", view);
-
-      if (typeof renderProducts === "function") {
-        renderProducts();
-      }
+      renderProducts();
     });
   });
 }
