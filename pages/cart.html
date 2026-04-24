@@ -72,33 +72,7 @@
               <div>Quantity</div>
               <div>Subtotal</div>
             </div>
-
-            <div class="cart-table__row">
-              <div class="cart-table__product">
-                <div class="cart-table__thumb">
-                  <img src="../assets/sofa_cart.png" alt="Asgaard sofa">
-                </div>
-                <div class="cart-table__name">Asgaard sofa</div>
-              </div>
-
-              <div class="cart-table__cell cart-table__muted js-cart-price" data-price="250000">Rs. 250,000.00</div>
-
-              <div class="cart-table__cell">
-                <input class="cart-table__qty js-cart-qty" type="number" value="1" min="1">
-              </div>
-
-              <div class="cart-table__cell cart-table__subtotal">
-                <span class="js-cart-item-subtotal">Rs. 250,000.00</span>
-
-                <button class="cart-table__remove" aria-label="Remove">
-
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M9 3h6l1 2h4v2H4V5h4l1-2Z"></path>
-                    <path d="M6 9h12l-1 12H7L6 9Z"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
+            <!-- Rows will be injected by cart.js -->
           </div>
 
 
@@ -108,12 +82,12 @@
             <div class="cart-totals__rows">
               <div class="cart-totals__row">
                 <div class="cart-totals__label">Subtotal</div>
-                <div class="cart-totals__value cart-totals__muted js-cart-subtotal">Rs. 250,000.00</div>
+                <div class="cart-totals__value cart-totals__muted js-cart-subtotal">Rp 0</div>
               </div>
 
               <div class="cart-totals__row">
                 <div class="cart-totals__label">Total</div>
-                <div class="cart-totals__value cart-totals__total js-cart-total">Rs. 250,000.00</div>
+                <div class="cart-totals__value cart-totals__total js-cart-total">Rp 0</div>
               </div>
             </div>
 
@@ -220,59 +194,7 @@
 
     </main>
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const subtotalEl = document.querySelector('.js-cart-subtotal');
-      const totalEl = document.querySelector('.js-cart-total');
-
-      function formatCurrency(value) {
-        return 'Rs. ' + value.toLocaleString('en-IN', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        });
-      }
-
-      function updateTotals() {
-        let grandTotal = 0;
-        const rows = document.querySelectorAll('.cart-table__row');
-
-        rows.forEach(row => {
-          const priceEl = row.querySelector('.js-cart-price');
-          if (!priceEl) return;
-
-          const price = parseFloat(priceEl.dataset.price);
-          const qtyInput = row.querySelector('.js-cart-qty');
-          const qty = parseInt(qtyInput.value) || 0;
-          const subtotal = price * qty;
-
-          const itemSubtotalEl = row.querySelector('.js-cart-item-subtotal');
-          if (itemSubtotalEl) itemSubtotalEl.textContent = formatCurrency(subtotal);
-          grandTotal += subtotal;
-        });
-
-        if (subtotalEl) subtotalEl.textContent = formatCurrency(grandTotal);
-        if (totalEl) totalEl.textContent = formatCurrency(grandTotal);
-      }
-
-
-      document.body.addEventListener('input', (e) => {
-        if (e.target.classList.contains('js-cart-qty')) {
-          updateTotals();
-        }
-      });
-
-      document.body.addEventListener('click', (e) => {
-        const removeBtn = e.target.closest('.cart-table__remove');
-        if (removeBtn) {
-          const row = removeBtn.closest('.cart-table__row');
-          if (row) {
-            row.remove();
-            updateTotals();
-          }
-        }
-      });
-    });
-  </script>
+  <script src="cart.js"></script>
 </body>
 
 </html>
