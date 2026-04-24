@@ -90,7 +90,7 @@ body{
   padding: 8px;
   cursor: pointer;
   border-radius: 10px;
-  display: grid;
+  
   place-items: center;
 }
 
@@ -285,7 +285,145 @@ body{
   margin: 0 auto;
   padding: 14px 16px 18px;
 }
-
+.filter-panel__options {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.filter-option__label {
+  font-weight: 500;
+  font-size: 16px;
+  color: #333;
+}
+ 
+/* Toggle Switch Styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+ 
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+ 
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #D8D8D8;
+  transition: .3s ease;
+  border-radius: 24px;
+}
+ 
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s ease;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+ 
+input:checked+.slider {
+  background-color: var(--gold);
+}
+ 
+input:checked+.slider:before {
+  transform: translateX(20px);
+}
+ 
+input:focus+.slider {
+  box-shadow: 0 0 1px var(--gold);
+}
+ 
+/* Range Slider Styles */
+.price-range-wrapper {
+  width: 100%;
+  min-width: 280px;
+  padding: 10px 0;
+}
+ 
+.range-slider {
+  position: relative;
+  height: 5px;
+  background: #e5e5e5;
+  border-radius: 5px;
+  margin: 15px 0 25px;
+}
+ 
+.range-fill {
+  position: absolute;
+  height: 100%;
+  background: var(--gold);
+  border-radius: 5px;
+}
+ 
+.range-input {
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: 0;
+  left: 0;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+ 
+.range-input::-webkit-slider-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  pointer-events: auto;
+  -webkit-appearance: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+ 
+.range-input::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  pointer-events: auto;
+  -moz-appearance: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+ 
+.range-values {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+ 
+.range-divider {
+  color: var(--muted);
+  margin: 0 4px;
+}
 .products{
   padding: 40px 0 72px;
 }
