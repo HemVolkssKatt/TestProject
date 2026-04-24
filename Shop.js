@@ -79,7 +79,46 @@ function getVisibleProducts() {
       case "default":
       default:
         break;
+    }}
+   return items.slice(0, perPage);
+}
+function initializeSearch() {
+  const searchInput = document.getElementById("searchInput");
+  const searchToggleBtn = document.getElementById("searchToggleBtn");
+  const searchCloseBtn = document.getElementById("searchCloseBtn");
+  const navSearch = document.getElementById("navSearch");
+  const navSearchBox = document.getElementById("navSearchBox");
+
+  if (!searchInput) return;
+ 
+  searchInput.addEventListener("input", (e) => {
+    const query = e.target.value;
+
+    if (typeof window.currentSearchQuery !== "undefined") {
+      window.currentSearchQuery = query;
     }
+    if (typeof window.currentPage !== "undefined") {
+      window.currentPage = 1;
+    }
+
+    if (typeof window.renderProducts === "function") {
+      window.renderProducts();
+    }
+  });
+
+  if (searchToggleBtn && navSearch) {
+    searchToggleBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navSearch.classList.add("is-open");
+      searchInput.focus();
+    });
+  }
+
+  if (searchCloseBtn && navSearch) {
+    searchCloseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navSearch.classList.remove("is-open");
+    });
   }
 
   return items.slice(0, perPage);
@@ -263,3 +302,53 @@ document.addEventListener("click", (e) => {
 });
 
 renderProducts();
+
+
+function initializeViewToggle() {
+  const viewButtons = document.querySelectorAll("[data-view]");
+  const productGrid = document.getElementById("productGrid");
+
+  if (!productGrid || viewButtons.length === 0) return;
+
+  const savedView = localStorage.getItem("productView") || "grid";
+
+  productGrid.classList.remove("grid-view", "list-view");
+  productGrid.classList.add(savedView === "list" ? "list-view" : "grid-view");
+
+  viewButtons.forEach((btn) => {
+    btn.classList.toggle("is-active", btn.dataset.view === savedView);
+  });
+
+  viewButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const view = btn.dataset.view;
+      if (!view) return;
+
+      viewButtons.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+
+      productGrid.classList.remove("grid-view", "list-view");
+      productGrid.classList.add(view === "list" ? "list-view" : "grid-view");
+
+      localStorage.setItem("productView", view);
+
+      if (typeof renderProducts === "function") {
+        renderProducts();
+      }
+    });
+  });
+}
+
+function initializeShop() {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      initializeSearch();
+      initializeViewToggle();
+    });
+  } else {
+    initializeSearch();
+    initializeViewToggle();
+  }
+}
+
+initializeShop();
