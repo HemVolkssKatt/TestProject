@@ -7,7 +7,8 @@ const products = [
     oldPrice: 3500000,
     badgeType: "sale",
     badgeText: "-30%",
-    image: "../assets/Syltherine.png"
+    image: "../assets/Syltherine.png",
+    keywords: ["chair", "cafe", "stylish", "seating", "dining", "sale", "discount"]
   },
   {
     id: 2,
@@ -17,7 +18,8 @@ const products = [
     oldPrice: null,
     badgeType: null,
     badgeText: "",
-    image: "../assets/Leviosa.png"
+    image: "../assets/Leviosa.png",
+    keywords: ["chair", "cafe", "stylish", "seating", "dining"]
   },
   {
     id: 3,
@@ -27,7 +29,8 @@ const products = [
     oldPrice: 14000000,
     badgeType: "sale",
     badgeText: "-50%",
-    image: "../assets/Lolito.png"
+    image: "../assets/Lolito.png",
+    keywords: ["sofa", "couch", "luxury", "big", "living room", "seating", "sale", "discount"]
   },
   {
     id: 4,
@@ -37,7 +40,8 @@ const products = [
     oldPrice: null,
     badgeType: "new",
     badgeText: "New",
-    image: "../assets/Respira.jpg"
+    image: "../assets/Respira.jpg",
+    keywords: ["table", "stool", "bar", "outdoor", "garden", "new", "arrival", "patio"]
   },
   {
     id: 5,
@@ -47,7 +51,8 @@ const products = [
     oldPrice: 3500000,
     badgeType: "sale",
     badgeText: "-30%",
-    image: "../assets/Syltherine.png"
+    image: "../assets/Syltherine.png",
+    keywords: ["chair", "cafe", "stylish", "seating", "dining", "sale", "discount"]
   },
   {
     id: 6,
@@ -57,7 +62,8 @@ const products = [
     oldPrice: null,
     badgeType: null,
     badgeText: "",
-    image: "../assets/Leviosa.png"
+    image: "../assets/Leviosa.png",
+    keywords: ["chair", "cafe", "stylish", "seating", "dining"]
   },
   {
     id: 7,
@@ -67,7 +73,8 @@ const products = [
     oldPrice: 14000000,
     badgeType: "sale",
     badgeText: "-50%",
-    image: "../assets/Lolito.png"
+    image: "../assets/Lolito.png",
+    keywords: ["sofa", "couch", "luxury", "big", "living room", "seating", "sale", "discount"]
   },
   {
     id: 8,
@@ -77,7 +84,8 @@ const products = [
     oldPrice: null,
     badgeType: "new",
     badgeText: "New",
-    image: "../assets/Respira.jpg"
+    image: "../assets/Respira.jpg",
+    keywords: ["table", "stool", "bar", "outdoor", "garden", "new", "arrival", "patio"]
   },
   {
     id: 9,
@@ -87,7 +95,8 @@ const products = [
     oldPrice: 3500000,
     badgeType: "sale",
     badgeText: "-30%",
-    image: "../assets/Syltherine.png"
+    image: "../assets/Syltherine.png",
+    keywords: ["chair", "cafe", "stylish", "seating", "dining", "sale", "discount"]
   },
   {
     id: 10,
@@ -97,7 +106,8 @@ const products = [
     oldPrice: null,
     badgeType: null,
     badgeText: "",
-    image: "../assets/Leviosa.png"
+    image: "../assets/Leviosa.png",
+    keywords: ["chair", "cafe", "stylish", "seating", "dining"]
   },
   {
     id: 11,
@@ -107,7 +117,8 @@ const products = [
     oldPrice: 14000000,
     badgeType: "sale",
     badgeText: "-50%",
-    image: "../assets/Lolito.png"
+    image: "../assets/Lolito.png",
+    keywords: ["sofa", "couch", "luxury", "big", "living room", "seating", "sale", "discount"]
   },
   {
     id: 12,
@@ -117,7 +128,8 @@ const products = [
     oldPrice: null,
     badgeType: "new",
     badgeText: "New",
-    image: "../assets/Respira.jpg"
+    image: "../assets/Respira.jpg",
+    keywords: ["table", "stool", "bar", "outdoor", "garden", "new", "arrival", "patio"]
   },
   {
     id: 13,
@@ -127,7 +139,8 @@ const products = [
     oldPrice: 3500000,
     badgeType: "sale",
     badgeText: "-30%",
-    image: "../assets/Syltherine.png"
+    image: "../assets/Syltherine.png",
+    keywords: ["chair", "cafe", "stylish", "seating", "dining", "sale", "discount"]
   },
   {
     id: 14,
@@ -137,7 +150,8 @@ const products = [
     oldPrice: null,
     badgeType: null,
     badgeText: "",
-    image: "../assets/Leviosa.png"
+    image: "../assets/Leviosa.png",
+    keywords: ["chair", "cafe", "stylish", "seating", "dining"]
   },
   {
     id: 15,
@@ -147,7 +161,8 @@ const products = [
     oldPrice: 14000000,
     badgeType: "sale",
     badgeText: "-50%",
-    image: "../assets/Lolito.png"
+    image: "../assets/Lolito.png",
+    keywords: ["sofa", "couch", "luxury", "big", "living room", "seating", "sale", "discount"]
   },
   {
     id: 16,
@@ -157,6 +172,7 @@ const products = [
     oldPrice: null,
     badgeType: "new",
     badgeText: "New",
-    image: "../assets/Respira.jpg"
+    image: "../assets/Respira.jpg",
+    keywords: ["table", "stool", "bar", "outdoor", "garden", "new", "arrival", "patio"]
   }
 ];

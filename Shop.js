@@ -1,4 +1,3 @@
-// Products are now loaded from sources/products.js
 
 const TOTAL_RESULTS = products.length;
 
@@ -20,6 +19,8 @@ const rangeMinText = document.getElementById("rangeMinText");
 const rangeMaxText = document.getElementById("rangeMaxText");
 
 let filteredTotal = products.length;
+let currentSearchQuery = "";
+let currentPage = 1;
 
 function getWishlist() {
   const wishlist = localStorage.getItem("wishlist");
@@ -46,9 +47,31 @@ function formatRupiah(num) {
   );
 }
 
+function matchesSearch(p, query) {
+  if (!query || query.trim() === "") return true;
+  const q = query.toLowerCase().trim();
+  const searchWords = q.split(/\s+/);
+  
+  // A product matches if EVERY word in the search query matches either the name, subtitle, or a keyword
+  return searchWords.every(word => {
+    const inName = p.name.toLowerCase().includes(word);
+    const inSubtitle = p.subtitle && p.subtitle.toLowerCase().includes(word);
+    const inKeywords = Array.isArray(p.keywords) && p.keywords.some(k => {
+      const lowerK = k.toLowerCase();
+      // Match if keyword is the word, or if it's a common prefix (e.g. "chair" matches "chairs")
+      return lowerK === word || lowerK.startsWith(word) || lowerK.includes(" " + word);
+    });
+    return inName || inSubtitle || inKeywords;
+  });
+}
+
 function getVisibleProducts() {
   const perPage = showSelect ? Number(showSelect.value) || products.length : products.length;
   let items = [...products];
+
+  if (currentSearchQuery && currentSearchQuery.trim() !== "") {
+    items = items.filter(p => matchesSearch(p, currentSearchQuery));
+  }
 
   if (discountToggle && discountToggle.checked) {
     items = items.filter(p => p.badgeType === "sale");
@@ -61,10 +84,10 @@ function getVisibleProducts() {
   if (minRange && maxRange) {
     let minVal = parseInt(minRange.value);
     let maxVal = parseInt(maxRange.value);
-    
+
     const filterMin = Math.min(minVal, maxVal);
     const filterMax = Math.max(minVal, maxVal);
-    
+
     items = items.filter(p => p.price >= filterMin && p.price <= filterMax);
   }
 
@@ -79,49 +102,45 @@ function getVisibleProducts() {
       case "default":
       default:
         break;
-    }}
-   return items.slice(0, perPage);
-}
-function initializeSearch() {
-  const searchInput = document.getElementById("searchInput");
-  const searchToggleBtn = document.getElementById("searchToggleBtn");
-  const searchCloseBtn = document.getElementById("searchCloseBtn");
-  const navSearch = document.getElementById("navSearch");
-  const navSearchBox = document.getElementById("navSearchBox");
-
-  if (!searchInput) return;
- 
-  searchInput.addEventListener("input", (e) => {
-    const query = e.target.value;
-
-    if (typeof window.currentSearchQuery !== "undefined") {
-      window.currentSearchQuery = query;
     }
-    if (typeof window.currentPage !== "undefined") {
-      window.currentPage = 1;
-    }
-
-    if (typeof window.renderProducts === "function") {
-      window.renderProducts();
-    }
-  });
-
-  if (searchToggleBtn && navSearch) {
-    searchToggleBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      navSearch.classList.add("is-open");
-      searchInput.focus();
-    });
-  }
-
-  if (searchCloseBtn && navSearch) {
-    searchCloseBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      navSearch.classList.remove("is-open");
-    });
   }
 
   return items.slice(0, perPage);
+}
+function initializeSearch() {
+  const searchInput = document.getElementById("searchInput");
+  if (!searchInput) return;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlQuery = urlParams.get("search");
+  if (urlQuery) {
+    searchInput.value = urlQuery;
+    currentSearchQuery = urlQuery;
+    window.currentSearchQuery = urlQuery;
+    const navSearch = document.getElementById("navSearch");
+    if (navSearch) navSearch.classList.add("is-open");
+    renderProducts(); // re-render with the URL search query applied
+  }
+
+  searchInput.addEventListener("input", (e) => {
+    currentSearchQuery = e.target.value;
+    window.currentSearchQuery = e.target.value;
+    currentPage = 1;
+    window.currentPage = 1;
+    renderProducts();
+  });
+
+  const searchCloseBtn = document.getElementById("searchCloseBtn");
+  if (searchCloseBtn) {
+    searchCloseBtn.addEventListener("click", () => {
+      currentSearchQuery = "";
+      window.currentSearchQuery = "";
+      searchInput.value = "";
+      currentPage = 1;
+      window.currentPage = 1;
+      renderProducts();
+    });
+  }
 }
 
 function renderProducts() {
@@ -233,23 +252,23 @@ if (newToggle) {
 
 function updateRange() {
   if (!minRange || !maxRange || !rangeFill) return;
-  
+
   let minVal = parseInt(minRange.value);
   let maxVal = parseInt(maxRange.value);
-  
+
   // Visual swap for the fill bar if handles cross
   const visualMin = Math.min(minVal, maxVal);
   const visualMax = Math.max(minVal, maxVal);
-  
+
   const minPercent = (visualMin / minRange.max) * 100;
   const maxPercent = (visualMax / maxRange.max) * 100;
-  
+
   rangeFill.style.left = minPercent + "%";
   rangeFill.style.width = (maxPercent - minPercent) + "%";
-  
+
   if (rangeMinText) rangeMinText.textContent = formatRupiah(visualMin);
   if (rangeMaxText) rangeMaxText.textContent = formatRupiah(visualMax);
-  
+
   renderProducts();
 }
 

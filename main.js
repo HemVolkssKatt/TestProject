@@ -77,13 +77,23 @@ function getVisibleProducts() {
   const perPage = showSelect ? Number(showSelect.value) || TOTAL_RESULTS : TOTAL_RESULTS;
   let items = [...products];
 
-  if (window.currentSearchQuery) {
-    const q = window.currentSearchQuery.toLowerCase();
-    items = items.filter(p =>
-      p.name.toLowerCase().includes(q) ||
-      (p.subtitle && p.subtitle.toLowerCase().includes(q)) ||
-      (p.keywords && p.keywords.some(kw => kw.toLowerCase().includes(q)))
-    );
+  if (window.currentSearchQuery && window.currentSearchQuery.trim() !== "") {
+    const q = window.currentSearchQuery.toLowerCase().trim();
+    const searchWords = q.split(/\s+/);
+    
+    items = items.filter(p => {
+      // Must match EVERY word typed
+      return searchWords.every(word => {
+        const inName = p.name.toLowerCase().includes(word);
+        const inSubtitle = p.subtitle && p.subtitle.toLowerCase().includes(word);
+        const inKeywords = p.keywords && p.keywords.some(kw => {
+          const k = kw.toLowerCase();
+          // Check for exact word or word prefix in keywords to avoid loose partial matches
+          return k === word || k.startsWith(word) || k.includes(" " + word);
+        });
+        return inName || inSubtitle || inKeywords;
+      });
+    });
   }
 
   if (sortSelect) {
