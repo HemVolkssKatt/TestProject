@@ -728,7 +728,7 @@ body {
 .inspiration-container {
     display: flex;
     align-items: center;
-    gap: 42px;
+    gap: 86px;
 }
  
 /* Left Content */
@@ -798,6 +798,7 @@ body {
  
 .slide-main img {
     width: 404px;
+    height: 582px;
 }
  
 /* Slide Overlay */
@@ -866,9 +867,9 @@ body {
 /* Next Button */
 .slider-next-btn {
     position: absolute;
-    top: calc(50% - 20px);
+    top: 50%;
     transform: translateY(-50%);
-    right: 12px;
+    right: 24px;
     width: 48px;
     height: 48px;
     background-color: #FFFFFF;
