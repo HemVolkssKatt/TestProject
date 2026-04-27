@@ -288,6 +288,57 @@ nav ul li a.active {
     color: #898989;
     font-weight: 400;
 }
+.nav-search {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav-search__box {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  max-width: 0;
+  opacity: 0;
+  transition: max-width 0.35s ease, opacity 0.3s ease;
+  border: 1.5px solid #ccc;
+  border-radius: 22px;
+  background: #fff;
+  margin-left: 6px;
+  pointer-events: none;
+}
+
+.nav-search.is-open .nav-search__box {
+  max-width: 220px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-search__box input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 7px 10px;
+  font-size: 14px;
+  font-family: inherit;
+  width: 160px;
+  color: #111;
+}
+
+.nav-search__close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 10px 0 2px;
+  color: #888;
+  display: grid;
+  place-items: center;
+}
+
+.nav-search__close:hover { color: #111; }
 
 
-
+
+
