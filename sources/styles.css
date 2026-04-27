@@ -771,12 +771,17 @@ body {
 .inspiration-slider-wrapper {
     flex: 1;
     position: relative;
-    padding-bottom: 40px;
+    overflow: hidden;
+    min-width: 0;
+    height: 582px;
 }
  
 .inspiration-slider {
     display: flex;
     gap: 24px;
+    align-items: flex-start;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
 }
  
 .slide {
@@ -785,9 +790,10 @@ body {
 }
  
 .slide img {
-    height: 582px;
-    width: auto;
+    height: 486px;
+    width: 372px;
     object-fit: cover;
+    transition: all 0.5s ease;
 }
  
 .slide-main img {
@@ -801,9 +807,18 @@ body {
     left: 24px;
     background-color: rgba(255, 255, 255, 0.72);
     backdrop-filter: blur(3px);
-    padding: 32px;
-    max-width: 217px;
+    padding: 24px 32px;
+    min-width: 217px;
+    width: max-content;
     z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.slide-main .slide-info {
+    opacity: 1;
+    visibility: visible;
 }
  
 .slide-label {
@@ -851,9 +866,9 @@ body {
 /* Next Button */
 .slider-next-btn {
     position: absolute;
-    top: 50%;
+    top: calc(50% - 20px);
     transform: translateY(-50%);
-    left: 380px; /* Positioned on the edge of the first image */
+    right: 12px;
     width: 48px;
     height: 48px;
     background-color: #FFFFFF;
@@ -867,15 +882,22 @@ body {
     cursor: pointer;
     z-index: 30;
     font-size: 20px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.slider-next-btn:hover {
+    background-color: #B88E2F;
+    color: #FFFFFF;
 }
  
 /* Pagination */
 .slider-pagination {
     position: absolute;
-    bottom: 0;
+    bottom: 24px;
     left: 428px;
     display: flex;
     gap: 20px;
+    align-items: center;
 }
  
 .dot {

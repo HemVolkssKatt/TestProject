@@ -95,8 +95,8 @@
             <h2>Our Products</h2>
         </div>
         <div class="product-grid">
-            <!-- Product 1: Syltherine -->
-            <div class="product-item">
+           
+            <div class="product-item" data-id="1" data-name="Syltherine">
                 <div class="product-img-wrapper">
                     <a href="product.html"><img src="../assets/syntenise.png" alt="Syltherine"></a>
                     <div class="badge badge-discount">-30%</div>
@@ -120,7 +120,7 @@
             </div>
 
             <!-- Product 2: Leviosa -->
-            <div class="product-item">
+            <div class="product-item" data-id="2" data-name="Leviosa">
                 <div class="product-img-wrapper">
                     <a href="product.html"><img src="../assets/leviosa.png" alt="Leviosa"></a>
                     <div class="product-overlay">
@@ -142,7 +142,7 @@
             </div>
 
             <!-- Product 3: Lolito -->
-            <div class="product-item">
+            <div class="product-item" data-id="3" data-name="Lolito">
                 <div class="product-img-wrapper">
                     <a href="product.html"><img src="../assets/lolito.png" alt="Lolito"></a>
                     <div class="badge badge-discount">-50%</div>
@@ -166,7 +166,7 @@
             </div>
 
             <!-- Product 4: Respira -->
-            <div class="product-item">
+            <div class="product-item" data-id="4" data-name="Respira">
                 <div class="product-img-wrapper">
                     <a href="product.html"><img src="../assets/livingroom.jpg" alt="Respira"></a>
                     <div class="badge badge-new">New</div>
@@ -188,7 +188,7 @@
                 </div>
             </div>
             <!--Product 5:grifo-->
-            <div class="product-item">
+            <div class="product-item" data-id="5" data-name="Grifo">
                 <div class="product-img-wrapper">
                     <a href="product.html"><img src="../assets/Grifo.png" alt="Grifo"></a>
                     <div class="product-overlay">
@@ -210,7 +210,7 @@
             </div>
 
             <!--Product 6:muggo-->
-            <div class="product-item">
+            <div class="product-item" data-id="6" data-name="Muggo">
                 <div class="product-img-wrapper">
                     <a href="product.html"><img src="../assets/muggo.png" alt="Muggo"></a>
                     <div class="badge badge-new">New</div>
@@ -233,7 +233,7 @@
             </div>
 
             <!--Product 7:pingky-->
-            <div class="product-item">
+             <div class="product-item" data-id="7" data-name="Pingky">
                 <div class="product-img-wrapper">
                     <a href="product.html"><img src="../assets/pingky.jpg" alt="pingky"></a>
                     <div class="badge badge-discount">-50%</div>
@@ -257,7 +257,7 @@
             </div>
 
             <!--Product 8:potty-->
-            <div class="product-item">
+            <div class="product-item" data-id="8" data-name="Potty">
                 <div class="product-img-wrapper">
                     <a href="product.html"><img src="../assets/potty.jpg" alt="potty"></a>
                     <div class="badge badge-new">New</div>
@@ -291,7 +291,8 @@
             <div class="inspiration-content">
                 <h2>50+ Beautiful rooms inspiration</h2>
                 <p>Our designer already made a lot of beautiful prototype of rooms that inspire you</p>
-                <button class="explore-more">Explore More</button>
+                <a href="Shop.html" class="explore-more" style="text-decoration: none; display: inline-block;">Explore
+                    More</a>
             </div>
 
             <!-- Right Side: Slider -->
@@ -313,10 +314,41 @@
                     <!-- Slide 2 -->
                     <div class="slide">
                         <img src="../assets/broom1.png" alt="Dining Room">
+                        <div class="slide-info">
+                            <div class="slide-label">
+                                <span>02</span>
+                                <span class="line"></span>
+                                <span>Dining Room</span>
+                            </div>
+                            <h3>Warm Gather</h3>
+                            <button class="slide-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
                     </div>
-                    <!-- Slide 3 (Placeholder for layout) -->
+                    <!-- Slide 3 -->
                     <div class="slide">
-                        <img src="../assets/bedroom.png" alt="Living Room">
+                        <img src="../assets/bedroom.png" alt="Cozy Retreat">
+                        <div class="slide-info">
+                            <div class="slide-label">
+                                <span>03</span>
+                                <span class="line"></span>
+                                <span>Bed Room</span>
+                            </div>
+                            <h3>Cozy Retreat</h3>
+                            <button class="slide-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="slide">
+                        <img src="../assets/Living.png" alt="Living Room">
+                        <div class="slide-info">
+                            <div class="slide-label">
+                                <span>04</span>
+                                <span class="line"></span>
+                                <span>Living Room</span>
+                            </div>
+                            <h3>Open Serenity</h3>
+                            <button class="slide-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
                     </div>
                 </div>
 
@@ -411,8 +443,12 @@
             <p>2023 furino. All rights reserved</p>
         </div>
     </footer>
+    
+    <script src="../products-data.js"></script>
+    <script src="../cart-handler.js"></script>
 
     <script src="../sources/products.js"></script>
+    <script src="../homepage.js"></script>
     <script src="../expand-search.js"></script>
     <script>
         // Homepage: pressing Enter or the search icon redirects to Shop page with query

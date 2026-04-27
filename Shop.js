@@ -158,7 +158,7 @@ function renderProducts() {
       }
 
       return `
-        <article class="product-card" data-name="${p.name}">
+        <article class="product-card" data-id="${p.id}" data-name="${p.name}">
           <div class="product-card__media">
             ${badgeHtml}
             <a href="product.html">
