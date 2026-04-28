@@ -114,6 +114,28 @@ document.addEventListener("click", (e) => {
     alert(`${name} added to cart`);
   }
 
+  const shareBtn = e.target.closest('[data-action="share"]');
+  if (shareBtn) {
+    e.preventDefault();
+    const card = shareBtn.closest(".product-card");
+    const name = card && card.dataset && card.dataset.name ? card.dataset.name : "Product";
+    const productUrl = window.location.origin + window.location.pathname.replace('wishlist.html', 'product.html') + '?name=' + encodeURIComponent(name);
+
+    if (navigator.share) {
+      navigator.share({
+        title: name,
+        text: 'Check out this ' + name + ' from Furino!',
+        url: productUrl
+      }).catch(err => console.error('Error sharing:', err));
+    } else {
+      navigator.clipboard.writeText(productUrl).then(() => {
+        alert('Product link copied to clipboard!\n' + productUrl);
+      }).catch(() => {
+        alert('Could not copy link.');
+      });
+    }
+  }
+
   const likeBtn = e.target.closest('[data-action="like"]');
   if (likeBtn) {
     const id = parseInt(likeBtn.dataset.id);

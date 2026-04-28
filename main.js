@@ -330,6 +330,33 @@ document.addEventListener("click", (e) => {
   }
 });
 
+document.addEventListener("click", (e) => {
+  const shareBtn = e.target.closest('[data-action="share"]');
+  if (shareBtn) {
+    e.preventDefault();
+    const card = shareBtn.closest(".product-card");
+    const name = card && card.dataset && card.dataset.name ? card.dataset.name : "Product";
+    
+    // Create a link to share
+    const productUrl = window.location.origin + window.location.pathname.replace('Shop.html', 'product.html') + '?name=' + encodeURIComponent(name);
+    
+    if (navigator.share) {
+      navigator.share({
+        title: name,
+        text: 'Check out this ' + name + ' from Furino!',
+        url: productUrl
+      }).catch(err => console.error('Error sharing:', err));
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(productUrl).then(() => {
+        alert('Product link copied to clipboard!\n' + productUrl);
+      }).catch(() => {
+        alert('Could not copy link.');
+      });
+    }
+  }
+});
+
 function updateLikeButtons() {
   const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
   const likeButtons = document.querySelectorAll('[data-action="like"]');
@@ -349,3 +376,33 @@ function updateLikeButtons() {
 
 renderProducts();
 updateLikeButtons();
+
+// ── View Toggle (Grid/List) ───────────────────────────────────────────────────
+(function initViewToggle() {
+  const viewBtns = document.querySelectorAll("[data-view]");
+  if (!viewBtns.length || !productGrid) return;
+
+  const savedView = localStorage.getItem("shopView") || "grid";
+  
+  productGrid.classList.remove("grid-view", "list-view");
+  productGrid.classList.add(savedView === "list" ? "list-view" : "grid-view");
+
+  viewBtns.forEach(btn => {
+    if (btn.dataset.view === savedView) {
+      btn.classList.add("is-active");
+    } else {
+      btn.classList.remove("is-active");
+    }
+    
+    btn.addEventListener("click", () => {
+      const view = btn.dataset.view;
+      localStorage.setItem("shopView", view);
+      
+      viewBtns.forEach(b => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      
+      productGrid.classList.remove("grid-view", "list-view");
+      productGrid.classList.add(view === "list" ? "list-view" : "grid-view");
+    });
+  });
+})();
