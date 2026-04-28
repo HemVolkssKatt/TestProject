@@ -7,9 +7,19 @@ function getWishlist() {
 
 function toggleWishlist(productId) {
   let wishlist = getWishlist();
-  const index = wishlist.indexOf(productId);
+  const index = wishlist.findIndex(item => {
+    if (typeof item === 'object' && item !== null) return item.id === productId;
+    return item === productId;
+  });
+  
   if (index === -1) {
-    wishlist.push(productId);
+    if (typeof products !== 'undefined') {
+      const product = products.find(p => p.id === productId);
+      if (product) wishlist.push(product);
+      else wishlist.push(productId);
+    } else {
+      wishlist.push(productId);
+    }
   } else {
     wishlist.splice(index, 1);
   }
@@ -27,8 +37,13 @@ function formatRupiah(num) {
 
 function renderWishlist() {
   if (!productGrid) return;
-  const wishlistIds = getWishlist();
-  const likedProducts = products.filter(p => wishlistIds.includes(p.id));
+  const wishlistItems = getWishlist();
+  
+  const likedProducts = wishlistItems.map(item => {
+    if (typeof item === 'object' && item !== null) return item;
+    if (typeof products !== 'undefined') return products.find(p => p.id === item);
+    return null;
+  }).filter(Boolean);
 
   if (likedProducts.length === 0) {
     productGrid.parentElement.innerHTML = `
