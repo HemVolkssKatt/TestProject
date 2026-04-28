@@ -252,6 +252,18 @@ nav ul li a.active {
     background: #9a7628;
 }
 
+.success-message {
+    padding: 16px 20px;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    color: #155724;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 
 
 .features-bar {
@@ -292,6 +304,23 @@ nav ul li a.active {
   display: flex;
   align-items: center;
   position: relative;
+}
+
+.nav-search__toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.nav-search__toggle:hover {
+  color: #B88E2F;
+  transform: translateY(-2px);
 }
 
 .nav-search__box {
