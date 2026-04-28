@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment Page</title>
+  <link rel="stylesheet" href="../sources/payment.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-box">
+      <div class="modal-icon success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h2>Payment Successful!</h2>
+      <p id="modalMessage">Your payment has been processed successfully.</p>
+      <div class="modal-details" id="modalDetails"></div>
+      <button class="btn-primary" onclick="closeModal()">Done</button>
+    </div>
+  </div>
+
+  <!-- Main Wrapper -->
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <img src="../assets/logo.png" alt="Furniro Logo" style="width: 35px; height: auto; margin-right: 10px;">
+          <span>Furniro Payment</span>
+        </div>
+
+      </div>
+      <div class="header-right">
+        <div class="secure-badge">
+          <i class="fas fa-lock"></i>
+          <span>256-bit SSL Secured</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Left Column: Order Summary -->
+      <section class="order-summary">
+        <h2 class="section-title"><i class="fas fa-receipt"></i> Order Summary</h2>
+
+        <div class="product-list" id="productList">
+          <!-- Products rendered by JS -->
+        </div>
+
+        <div class="coupon-section">
+          <h3><i class="fas fa-tag"></i> Apply Coupon</h3>
+          <div class="coupon-input-group">
+            <input type="text" id="couponInput" placeholder="Enter coupon code" />
+            <button onclick="applyCoupon()">Apply</button>
+          </div>
+          <p class="coupon-hint">Try: <span onclick="fillCoupon('SAVE10')">SAVE10</span>, <span onclick="fillCoupon('FLAT20')">FLAT20</span>, <span onclick="fillCoupon('FREESHIP')">FREESHIP</span></p>
+          <div id="couponMessage"></div>
+        </div>
+
+        <div class="price-breakdown">
+          <div class="price-row">
+            <span>Subtotal</span>
+            <span id="subtotal">Rp. 0.00</span>
+          </div>
+          <div class="price-row">
+            <span>Shipping</span>
+            <span id="shipping">Rp. 15.000,00</span>
+          </div>
+          <div class="price-row discount-row" id="discountRow" style="display:none;">
+            <span>Discount</span>
+            <span id="discountAmt" class="discount-text">-Rp. 0.00</span>
+          </div>
+          <div class="price-row tax-row">
+            <span>Tax (10%)</span>
+            <span id="tax">Rp. 0.00</span>
+          </div>
+          <div class="price-row total-row">
+            <span>Total</span>
+            <span id="total">Rp. 0.00</span>
+          </div>
+        </div>
+
+
+        <!-- Saved Cards -->
+        <div class="saved-cards-section">
+          <h3><i class="fas fa-credit-card"></i> Saved Cards</h3>
+          <div class="saved-cards" id="savedCards">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Payment Form -->
+      <section class="payment-form-section">
+        <h2 class="section-title"><i class="fas fa-wallet"></i> Payment Details</h2>
+
+        <!-- Payment Method Tabs -->
+        <div class="payment-tabs">
+          <button class="tab-btn active" data-tab="card" onclick="switchTab('card', this)">
+            <i class="fas fa-credit-card"></i> Card
+          </button>
+          <button class="tab-btn" data-tab="upi" onclick="switchTab('upi', this)">
+            <i class="fas fa-mobile-alt"></i> UPI
+          </button>
+          <button class="tab-btn" data-tab="netbanking" onclick="switchTab('netbanking', this)">
+            <i class="fas fa-university"></i> Net Banking
+          </button>
+          <button class="tab-btn" data-tab="wallet" onclick="switchTab('wallet', this)">
+            <i class="fas fa-wallet"></i> Wallet
+          </button>
+          <button class="tab-btn" data-tab="emi" onclick="switchTab('emi', this)">
+            <i class="fas fa-calendar-alt"></i> EMI
+          </button>
+        </div>
+
+        <!-- ============ CARD TAB ============ -->
+        <div class="tab-content active" id="tab-card">
+          <!-- Card Preview -->
+          <div class="card-preview-container">
+            <div class="card-preview" id="cardPreview">
+              <div class="card-front" id="cardFront">
+                <div class="card-top">
+                  <div class="card-chip">
+                    <i class="fas fa-microchip"></i>
+                  </div>
+                  <div class="card-network" id="cardNetworkIcon">
+                    <i class="fab fa-cc-visa"></i>
+                  </div>
+                </div>
+                <div class="card-number-display" id="cardNumberDisplay">
+                  •••• •••• •••• ••••
+                </div>
+                <div class="card-bottom">
+                  <div>
+                    <div class="card-label">Card Holder</div>
+                    <div class="card-value" id="cardHolderDisplay">FULL NAME</div>
+                  </div>
+                  <div>
+                    <div class="card-label">Expires</div>
+                    <div class="card-value" id="cardExpiryDisplay">MM/YY</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-back" id="cardBack">
+                <div class="card-stripe"></div>
+                <div class="card-cvv-area">
+                  <div class="card-cvv-label">CVV</div>
+                  <div class="card-cvv-display" id="cardCvvDisplay">•••</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form id="cardForm" novalidate>
+            <div class="form-group">
+              <label for="cardNumber">Card Number</label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-credit-card input-icon"></i>
+                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number" />
+                <span class="card-type-badge" id="cardTypeBadge"></span>
+              </div>
+              <span class="error-msg" id="cardNumberError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="cardHolder">Card Holder Name</label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" id="cardHolder" placeholder="John Doe" autocomplete="cc-name" />
+              </div>
+              <span class="error-msg" id="cardHolderError"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cardExpiry">Expiry Date</label>
+                <div class="input-icon-wrap">
+                  <i class="fas fa-calendar input-icon"></i>
+                  <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" autocomplete="cc-exp" />
+                </div>
+                <span class="error-msg" id="cardExpiryError"></span>
+              </div>
+              <div class="form-group">
+                <label for="cardCvv">CVV
+                  <span class="cvv-info" title="3 or 4 digit security code on your card"><i class="fas fa-question-circle"></i></span>
+                </label>
+                <div class="input-icon-wrap">
+                  <i class="fas fa-lock input-icon"></i>
+                  <input type="password" id="cardCvv" placeholder="•••" maxlength="4" autocomplete="cc-csc" />
+                </div>
+                <span class="error-msg" id="cardCvvError"></span>
+              </div>
+            </div>
+
+            <div class="save-card-option">
+              <label class="checkbox-label">
+                <input type="checkbox" id="saveCard" />
+                <span class="checkmark"></span>
+                Save this card for future payments
+              </label>
+            </div>
+
+            <button type="button" class="btn-primary pay-btn" onclick="processPayment('card')">
+              <i class="fas fa-lock"></i>
+              <span id="payBtnText">Pay Now</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- ============ UPI TAB ============ -->
+        <div class="tab-content" id="tab-upi">
+          <div class="upi-section">
+            <h3 class="sub-title">Pay via UPI ID</h3>
+            <div class="form-group">
+              <label for="upiId">UPI ID</label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-at input-icon"></i>
+                <input type="text" id="upiId" placeholder="yourname@upi" />
+              </div>
+              <span class="error-msg" id="upiError"></span>
+            </div>
+            <button class="btn-verify" onclick="verifyUPI()">
+              <i class="fas fa-check-circle"></i> Verify UPI ID
+            </button>
+            <div id="upiVerifyResult"></div>
+
+            <div class="divider"><span>OR</span></div>
+
+            <h3 class="sub-title">Scan QR Code</h3>
+            <div class="qr-container">
+              <div class="qr-code" id="qrCode">
+                <div class="qr-inner">
+                  <div class="qr-grid">
+                    <div class="qr-cell dark"></div><div class="qr-cell dark"></div><div class="qr-cell dark"></div><div class="qr-cell dark"></div><div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div>
+                    <div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell light"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div>
+                    <div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div>
+                    <div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div>
+                    <div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell light"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div>
+                    <div class="qr-cell dark"></div><div class="qr-cell dark"></div><div class="qr-cell dark"></div><div class="qr-cell dark"></div><div class="qr-cell dark"></div><div class="qr-cell dark"></div><div class="qr-cell dark"></div>
+                    <div class="qr-cell light"></div><div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div><div class="qr-cell light"></div><div class="qr-cell dark"></div><div class="qr-cell light"></div>
+                  </div>
+                  <div class="qr-logo"><i class="fas fa-bolt"></i></div>
+                </div>
+              </div>
+              <p class="qr-info">Scan using any UPI app: GPay, PhonePe, Paytm, etc.</p>
+              <div class="qr-apps">
+                <div class="qr-app-icon" title="Google Pay"><i class="fab fa-google-pay" style="color:#4285F4; font-size:1.6rem;"></i></div>
+                <div class="qr-app-icon" title="PhonePe"><span style="color:#5f259f;font-weight:800;font-size:0.8rem;">Pe</span></div>
+                <div class="qr-app-icon" title="Paytm"><span style="color:#00BAF2;font-weight:800;font-size:0.8rem;">P</span></div>
+                <div class="qr-app-icon" title="BHIM"><span style="color:#E4393C;font-weight:800;font-size:0.7rem;">BHIM</span></div>
+              </div>
+              <div class="qr-timer">
+                <i class="fas fa-clock"></i>
+                QR expires in <span id="qrTimer">04:59</span>
+              </div>
+            </div>
+
+            <button class="btn-primary pay-btn" onclick="processPayment('upi')">
+              <i class="fas fa-lock"></i> Pay via UPI
+            </button>
+          </div>
+        </div>
+
+        <!-- ============ NET BANKING TAB ============ -->
+        <div class="tab-content" id="tab-netbanking">
+          <h3 class="sub-title">Select Your Bank</h3>
+          <div class="bank-grid" id="bankGrid">
+            <!-- Rendered by JS -->
+          </div>
+          <div class="form-group" style="margin-top:1rem;">
+            <label for="otherBank">Other Banks</label>
+            <div class="input-icon-wrap">
+              <i class="fas fa-search input-icon"></i>
+              <select id="otherBank" onchange="selectBank(this.value)">
+                <option value="">-- Select a bank --</option>
+              </select>
+            </div>
+          </div>
+          <div id="selectedBankInfo"></div>
+          <button class="btn-primary pay-btn" onclick="processPayment('netbanking')">
+            <i class="fas fa-university"></i> Proceed to Net Banking
+          </button>
+        </div>
+
+        <!-- ============ WALLET TAB ============ -->
+        <div class="tab-content" id="tab-wallet">
+          <h3 class="sub-title">Choose Wallet</h3>
+          <div class="wallet-grid" id="walletGrid">
+            <!-- Rendered by JS -->
+          </div>
+          <div class="wallet-balance-section" id="walletBalanceSection" style="display:none;">
+            <div class="wallet-balance-card">
+              <div class="wallet-balance-left">
+                <i class="fas fa-wallet"></i>
+                <div>
+                  <div class="wallet-name" id="walletName">Paytm</div>
+                  <div class="wallet-balance-label">Available Balance</div>
+                </div>
+              </div>
+              <div class="wallet-balance-amount" id="walletBalance">$120.00</div>
+            </div>
+            <div class="wallet-mobile-section">
+              <label for="walletMobile">Registered Mobile Number</label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-phone input-icon"></i>
+                <input type="text" id="walletMobile" placeholder="+1 234 567 8900" maxlength="15" />
+              </div>
+              <span class="error-msg" id="walletMobileError"></span>
+            </div>
+          </div>
+          <button class="btn-primary pay-btn" onclick="processPayment('wallet')">
+            <i class="fas fa-wallet"></i> Pay via Wallet
+          </button>
+        </div>
+
+        <!-- ============ EMI TAB ============ -->
+        <div class="tab-content" id="tab-emi">
+          <h3 class="sub-title">EMI Plans</h3>
+          <p class="emi-note"><i class="fas fa-info-circle"></i> EMI available on credit cards only. No cost EMI options available.</p>
+          <div class="emi-plans" id="emiPlans">
+            <!-- Rendered by JS -->
+          </div>
+          <div class="form-group" style="margin-top:1.5rem;">
+            <label for="emiCardNumber">Credit Card Number</label>
+            <div class="input-icon-wrap">
+              <i class="fas fa-credit-card input-icon"></i>
+              <input type="text" id="emiCardNumber" placeholder="1234 5678 9012 3456" maxlength="19" />
+            </div>
+            <span class="error-msg" id="emiCardError"></span>
+          </div>
+          <button class="btn-primary pay-btn" onclick="processPayment('emi')">
+            <i class="fas fa-calendar-check"></i> Confirm EMI Plan
+          </button>
+        </div>
+
+        <!-- Security Info -->
+        <div class="security-info">
+          <div class="security-badges">
+            <div class="sec-badge"><i class="fas fa-shield-alt"></i> PCI DSS</div>
+            <div class="sec-badge"><i class="fas fa-lock"></i> SSL Secured</div>
+            <div class="sec-badge"><i class="fas fa-user-shield"></i> 3D Secure</div>
+          </div>
+          <p class="security-text">Your payment information is encrypted and secure. We never store your full card details.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 PaySwift. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Refund Policy</a></p>
+    </footer>
+
+  </div>
+
+  <script src="../payment.js"></script>
+</body>
+</html>

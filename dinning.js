@@ -84,7 +84,6 @@ function getVisibleProducts() {
   const perPage = showSelect ? Number(showSelect.value) || products.length : products.length;
   let items = [...products];
 
-  // URL Parameters (Category filtering)
   const urlParams = new URLSearchParams(window.location.search);
   const selectedCategory = urlParams.get("category");
   if (selectedCategory) {
