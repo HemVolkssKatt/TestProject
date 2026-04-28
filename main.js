@@ -49,13 +49,13 @@ const products = Array.from({ length: 48 }, (_, i) => ({
 const TOTAL_RESULTS = products.length;
 
 const productGrid = document.getElementById("productGrid");
-const showSelect  = document.getElementById("showSelect");
-const sortSelect  = document.getElementById("sortSelect");
+const showSelect = document.getElementById("showSelect");
+const sortSelect = document.getElementById("sortSelect");
 const resultsText = document.getElementById("resultsText");
-const filterBtn   = document.getElementById("filterBtn");
+const filterBtn = document.getElementById("filterBtn");
 const filterPanel = document.getElementById("filterPanel");
-const menuBtn     = document.getElementById("menuBtn");
-const primaryNav  = document.getElementById("primaryNav");
+const menuBtn = document.getElementById("menuBtn");
+const primaryNav = document.getElementById("primaryNav");
 const paginationNav = document.getElementById("pagination");
 
 window.currentPage = window.currentPage || 1;
@@ -80,7 +80,7 @@ function getVisibleProducts() {
   if (window.currentSearchQuery && window.currentSearchQuery.trim() !== "") {
     const q = window.currentSearchQuery.toLowerCase().trim();
     const searchWords = q.split(/\s+/);
-    
+
     items = items.filter(p => {
       // Must match EVERY word typed
       return searchWords.every(word => {
@@ -179,11 +179,10 @@ function renderProducts() {
             <p class="product-sub">${p.subtitle}</p>
             <div class="price-row">
               <span class="price">${formatRupiah(p.price)}</span>
-              ${
-                p.oldPrice
-                  ? `<span class="price-old">${formatRupiah(p.oldPrice)}</span>`
-                  : ""
-              }
+              ${p.oldPrice
+          ? `<span class="price-old">${formatRupiah(p.oldPrice)}</span>`
+          : ""
+        }
             </div>
           </div>
         </article>
@@ -336,10 +335,10 @@ document.addEventListener("click", (e) => {
     e.preventDefault();
     const card = shareBtn.closest(".product-card");
     const name = card && card.dataset && card.dataset.name ? card.dataset.name : "Product";
-    
+
     // Create a link to share
     const productUrl = window.location.origin + window.location.pathname.replace('Shop.html', 'product.html') + '?name=' + encodeURIComponent(name);
-    
+
     if (navigator.share) {
       navigator.share({
         title: name,
@@ -383,7 +382,7 @@ updateLikeButtons();
   if (!viewBtns.length || !productGrid) return;
 
   const savedView = localStorage.getItem("shopView") || "grid";
-  
+
   productGrid.classList.remove("grid-view", "list-view");
   productGrid.classList.add(savedView === "list" ? "list-view" : "grid-view");
 
@@ -393,14 +392,14 @@ updateLikeButtons();
     } else {
       btn.classList.remove("is-active");
     }
-    
+
     btn.addEventListener("click", () => {
       const view = btn.dataset.view;
       localStorage.setItem("shopView", view);
-      
+
       viewBtns.forEach(b => b.classList.remove("is-active"));
       btn.classList.add("is-active");
-      
+
       productGrid.classList.remove("grid-view", "list-view");
       productGrid.classList.add(view === "list" ? "list-view" : "grid-view");
     });

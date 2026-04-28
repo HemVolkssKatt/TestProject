@@ -17,7 +17,7 @@
   width: 0;
   height: 0;
 }
- 
+
 .slider {
   position: absolute;
   cursor: pointer;
@@ -1037,6 +1037,73 @@ img[alt="furniture5"] { width: 258px; height: 196px; }
     }
 }
  
- 
- 
- 
+/* ── Expandable navbar search ── */
+.nav-search {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav-search__toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.nav-search__toggle:hover {
+  color: #B88E2F;
+  transform: translateY(-2px);
+}
+
+.nav-search__box {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  max-width: 0;
+  opacity: 0;
+  transition: max-width 0.35s ease, opacity 0.3s ease;
+  border: 1.5px solid #ccc;
+  border-radius: 22px;
+  background: #fff;
+  margin-left: 6px;
+  pointer-events: none;
+}
+
+.nav-search.is-open .nav-search__box {
+  max-width: 220px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-search__box input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 7px 10px;
+  font-size: 14px;
+  font-family: inherit;
+  width: 160px;
+  color: #111;
+}
+
+.nav-search__close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 10px 0 2px;
+  color: #888;
+  display: grid;
+  place-items: center;
+}
+
+.nav-search__close:hover {
+  color: #111;
+}
