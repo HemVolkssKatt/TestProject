@@ -70,17 +70,25 @@
     gap: 30px;
 }
  
-.nav-icons a {
+.nav-icons a,
+.nav-search__toggle,
+.nav-search__close {
     text-decoration: none;
     font-size: 20px;
     color: #000000;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
     transition: transform 0.2s ease, color 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
 }
  
-.nav-icons a:hover {
+.nav-icons a:hover,
+.nav-search__toggle:hover,
+.nav-search__close:hover {
     color: #B88E2F;
     transform: translateY(-2px);
 }
