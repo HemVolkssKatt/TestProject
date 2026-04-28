@@ -1,0 +1,38 @@
+/* About Section */
+.about-section {
+  padding: 80px 50px;
+  background-color: #f8f8f8;
+}
+
+.about-container {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-text h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.about-images {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+}
+
+.about-images img {
+  width: 48%;
+  border-radius: 10px;
+}
