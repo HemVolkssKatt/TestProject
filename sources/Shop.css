@@ -568,6 +568,11 @@ input:focus+.slider {
   transform: translateY(1px);
 }
 
+.btn-cart:hover {
+  background-color: #B88E2F;
+  color: #FFFFFF;
+}
+
 .overlay-actions {
   position: absolute;
   left: 50%;
@@ -580,6 +585,7 @@ input:focus+.slider {
   flex-wrap: nowrap;
   color: #fff;
 }
+
 
 .action-link {
   border: 0;
@@ -602,6 +608,8 @@ input:focus+.slider {
   height: 16px;
   color: #fff;
 }
+
+
 
 .badge {
   position: absolute;
@@ -943,6 +951,23 @@ input:focus+.slider {
   display: flex;
   align-items: center;
   position: relative;
+}
+
+.nav-search__toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.nav-search__toggle:hover {
+  color: #B88E2F;
+  transform: translateY(-2px);
 }
 
 .nav-search__box {

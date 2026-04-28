@@ -423,7 +423,7 @@
                 <h3 class="footer-title">Help</h3>
                 <ul>
                     <li><a href="#">Payment Options</a></li>
-                    <li><a href="#">Returns</a></li>
+                    <li><a href="returns.html">Returns</a></li>
                     <li><a href="#">Privacy Policies</a></li>
                 </ul>
             </div>
@@ -475,6 +475,33 @@
                 }, true);
             }
         })();
+
+        // Share button handler for homepage product cards
+        document.addEventListener('click', function (e) {
+            var link = e.target.closest('.overlay-actions a');
+            if (!link) return;
+            var text = link.textContent.trim().toLowerCase();
+            if (text.indexOf('share') === -1) return;
+
+            e.preventDefault();
+            var card = link.closest('.product-item');
+            var name = card && card.dataset.name ? card.dataset.name : 'Product';
+            var productUrl = window.location.origin + window.location.pathname.replace('homepage.html', 'product.html') + '?name=' + encodeURIComponent(name);
+
+            if (navigator.share) {
+                navigator.share({
+                    title: name,
+                    text: 'Check out this ' + name + ' from Furino!',
+                    url: productUrl
+                }).catch(function (err) { console.error('Error sharing:', err); });
+            } else {
+                navigator.clipboard.writeText(productUrl).then(function () {
+                    alert('Product link copied to clipboard!\n' + productUrl);
+                }).catch(function () {
+                    alert('Could not copy link.');
+                });
+            }
+        });
     </script>
 </body>
 
