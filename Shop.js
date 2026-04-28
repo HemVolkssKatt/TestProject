@@ -323,6 +323,9 @@ function initializeViewToggle() {
       renderProducts();
     });
   });
+
+  // Initial render on page load
+  renderProducts();
 }
 
 function initializeShop() {
