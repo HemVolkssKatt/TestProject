@@ -61,62 +61,49 @@
     </header>
 
     <main>
-
       <section class="hero" style="--hero-image: url('../assets/pic_cart.jpg');">
         <div class="hero__content">
           <img src="../assets/Meubel House_Logos-05.png" alt="Furniro Logo" class="hero__mark">
-
           <h1 class="hero__title">Cart</h1>
-
           <div class="hero__crumbs" aria-label="Breadcrumb">
             <span class="crumb">Home</span>
             <span class="crumb__sep">›</span>
             <span class="crumb crumb--current">Cart</span>
           </div>
         </div>
-
       </section>
 
       <section class="cart-area">
         <div class="cart-area__container">
-
-
-          <div class="cart-table">
+          <div class="cart-table" id="cartTable">
             <div class="cart-table__header">
               <div>Product</div>
               <div>Price</div>
               <div>Quantity</div>
               <div>Subtotal</div>
             </div>
-
             <div id="cartItemsContainer"></div>
           </div>
 
-
           <aside class="cart-totals">
             <h2 class="cart-totals__title">Cart Totals</h2>
-
             <div class="cart-totals__rows">
               <div class="cart-totals__row">
                 <div class="cart-totals__label">Subtotal</div>
                 <div class="cart-totals__value cart-totals__muted js-cart-subtotal">Rp 0</div>
               </div>
-
               <div class="cart-totals__row">
                 <div class="cart-totals__label">Total</div>
                 <div class="cart-totals__value cart-totals__total js-cart-total">Rp 0</div>
               </div>
             </div>
-
             <button class="cart-totals__btn" onclick="window.location.href='checkout.html'">Check Out</button>
           </aside>
-
         </div>
       </section>
 
       <section class="benefits">
         <div class="benefits__wrap">
-
           <div class="benefit">
             <div class="benefit__icon">
               <img src="../assets/trophy.png" alt="High Quality" class="benefit__icon-img">
@@ -126,7 +113,6 @@
               <div class="benefit__sub">crafted from top materials</div>
             </div>
           </div>
-
           <div class="benefit">
             <div class="benefit__icon">
               <img src="../assets/warranty.png" alt="Warranty Protection" class="benefit__icon-img">
@@ -136,7 +122,6 @@
               <div class="benefit__sub">Over 2 years</div>
             </div>
           </div>
-
           <div class="benefit">
             <div class="benefit__icon">
               <img src="../assets/shipping.png" alt="Free Shipping" class="benefit__icon-img">
@@ -146,7 +131,6 @@
               <div class="benefit__sub">Order over 150 $</div>
             </div>
           </div>
-
           <div class="benefit">
             <div class="benefit__icon">
               <img src="../assets/support.png" alt="24 / 7 Support" class="benefit__icon-img">
@@ -156,14 +140,11 @@
               <div class="benefit__sub">Dedicated support</div>
             </div>
           </div>
-
         </div>
       </section>
 
-
       <footer class="site-footer">
         <div class="footer-container">
-          <!-- Column 1: Brand & Address -->
           <div class="footer-column footer-brand">
             <h2 class="footer-logo">Funiro.</h2>
             <address>
@@ -171,8 +152,6 @@
               FL 33134 USA
             </address>
           </div>
-
-          <!-- Column 2: Links -->
           <div class="footer-column footer-links">
             <h3 class="footer-title">Links</h3>
             <ul>
@@ -182,23 +161,14 @@
               <li><a href="contact.html">Contact</a></li>
             </ul>
           </div>
-
-          <!-- Column 3: Help -->
           <div class="footer-column footer-help">
             <h3 class="footer-title">Help</h3>
             <ul>
               <li><a href="#">Payment Options</a></li>
-<<<<<<< HEAD
-              <li><a href="#">Returns</a></li>
               <li><a href="PrivacyPolicy.html">Privacy Policies</a></li>
-=======
               <li><a href="returns.html">Returns</a></li>
-              <li><a href="#">Privacy Policies</a></li>
->>>>>>> ef115448d6eb2d96dada05548638c5a122b80fbf
             </ul>
           </div>
-
-          <!-- Column 4: Newsletter -->
           <div class="footer-column footer-newsletter">
             <h3 class="footer-title">Newsletter</h3>
             <form class="newsletter-form">
@@ -207,39 +177,32 @@
             </form>
           </div>
         </div>
-
         <div class="footer-bottom">
           <div class="bottom-border"></div>
           <p>2023 furino. All rights reserved</p>
         </div>
       </footer>
-
     </main>
   </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const subtotalEl = document.querySelector('.js-cart-subtotal');
       const totalEl = document.querySelector('.js-cart-total');
       const cartItemsContainer = document.getElementById('cartItemsContainer');
 
-      function formatCurrency(value) {
-        return 'Rs. ' + value.toLocaleString('en-IN', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        });
+      function formatRupiah(num) {
+        return "Rp " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
       }
 
-      // Get cart from localStorage
       function getCart() {
         return JSON.parse(localStorage.getItem('cart')) || [];
       }
 
-      // Save cart to localStorage
       function saveCart(cart) {
         localStorage.setItem('cart', JSON.stringify(cart));
       }
 
-      // Render cart items
       function renderCart() {
         const cart = getCart();
         cartItemsContainer.innerHTML = '';
@@ -253,8 +216,9 @@
         cart.forEach((item, index) => {
           const row = document.createElement('div');
           row.className = 'cart-table__row';
-          row.dataset.cartIndex = index;
-
+          
+          const price = parseFloat(item.price) || 0;
+          const quantity = parseInt(item.quantity || item.qty) || 1;
           const imageUrl = item.image || '../assets/placeholder.png';
           
           row.innerHTML = `
@@ -264,116 +228,64 @@
               </div>
               <div class="cart-table__name">${item.name}</div>
             </div>
-
-            <div class="cart-table__cell cart-table__muted js-cart-price" data-price="${item.price}">
-              ${formatCurrency(item.price)}
-            </div>
-
+            <div class="cart-table__cell cart-table__muted">${formatRupiah(price)}</div>
             <div class="cart-table__cell">
-              <input class="cart-table__qty js-cart-qty" type="number" value="${item.quantity}" min="1" data-index="${index}">
+              <input class="cart-table__qty js-cart-qty" type="number" value="${quantity}" min="1" data-index="${index}">
             </div>
-
             <div class="cart-table__cell cart-table__subtotal">
-              <span class="js-cart-item-subtotal">${formatCurrency(item.price * item.quantity)}</span>
+              <span>${formatRupiah(price * quantity)}</span>
               <button class="cart-table__remove" aria-label="Remove" data-index="${index}">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M9 3h6l1 2h4v2H4V5h4l1-2Z"></path>
-                  <path d="M6 9h12l-1 12H7L6 9Z"></path>
-                </svg>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4l1-2Z"></path><path d="M6 9h12l-1 12H7L6 9Z"></path></svg>
               </button>
             </div>
           `;
-
           cartItemsContainer.appendChild(row);
         });
-
         updateTotals();
       }
 
       function updateTotals() {
-        let grandTotal = 0;
-        const rows = document.querySelectorAll('.cart-table__row');
-
-        rows.forEach(row => {
-          const priceEl = row.querySelector('.js-cart-price');
-          if (!priceEl) return;
-
-          const price = parseFloat(priceEl.dataset.price);
-          const qtyInput = row.querySelector('.js-cart-qty');
-          const qty = parseInt(qtyInput.value) || 0;
-          const subtotal = price * qty;
-
-          const itemSubtotalEl = row.querySelector('.js-cart-item-subtotal');
-          if (itemSubtotalEl) itemSubtotalEl.textContent = formatCurrency(subtotal);
-          grandTotal += subtotal;
+        const cart = getCart();
+        let total = 0;
+        cart.forEach(item => {
+          const price = parseFloat(item.price) || 0;
+          const quantity = parseInt(item.quantity || item.qty) || 1;
+          total += price * quantity;
         });
-
-        if (subtotalEl) subtotalEl.textContent = formatCurrency(grandTotal);
-        if (totalEl) totalEl.textContent = formatCurrency(grandTotal);
+        if (subtotalEl) subtotalEl.textContent = formatRupiah(total);
+        if (totalEl) totalEl.textContent = formatRupiah(total);
       }
 
-      // Handle quantity changes
-      document.body.addEventListener('input', (e) => {
+      cartItemsContainer.addEventListener('input', (e) => {
         if (e.target.classList.contains('js-cart-qty')) {
-          const index = parseInt(e.target.dataset.index);
+          const index = e.target.dataset.index;
+          const cart = getCart();
           const newQty = parseInt(e.target.value) || 1;
-          
-          const cart = getCart();
           if (cart[index]) {
-            cart[index].quantity = newQty;
-            saveCart(cart);
-          }
-          
-          updateTotals();
-        }
-      });
-
-      // Handle item removal
-      document.body.addEventListener('click', (e) => {
-        const removeBtn = e.target.closest('.cart-table__remove');
-        if (removeBtn) {
-          const index = parseInt(removeBtn.dataset.index);
-          const cart = getCart();
-          
-          if (cart[index]) {
-            cart.splice(index, 1);
+            if (cart[index].quantity) cart[index].quantity = newQty;
+            else cart[index].qty = newQty;
             saveCart(cart);
             renderCart();
           }
         }
       });
 
-      // Initial render
+      cartItemsContainer.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.cart-table__remove');
+        if (removeBtn) {
+          const index = removeBtn.dataset.index;
+          let cart = getCart();
+          cart.splice(index, 1);
+          saveCart(cart);
+          renderCart();
+        }
+      });
+
       renderCart();
     });
   </script>
   <script src="../products-data.js"></script>
   <script src="../expand-search.js"></script>
-  <script>
-    // Cart page: pressing Enter or the search icon redirects to Shop page with query
-    (function () {
-      var input = document.getElementById('searchInput');
-      if (!input) return;
-      function doSearch() {
-        var q = input.value.trim();
-        if (q) {
-          window.location.href = 'Shop.html?search=' + encodeURIComponent(q);
-        }
-      }
-      input.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') doSearch();
-      });
-      var toggleBtn = document.getElementById('searchToggleBtn');
-      if (toggleBtn) {
-        toggleBtn.addEventListener('click', function () {
-          var navSearch = document.getElementById('navSearch');
-          if (navSearch && navSearch.classList.contains('is-open')) {
-            doSearch();
-          }
-        }, true);
-      }
-    })();
-  </script>
 </body>
 
 </html>

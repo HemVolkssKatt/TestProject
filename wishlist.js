@@ -8,13 +8,13 @@ function getWishlist() {
 function toggleWishlist(productId) {
   let wishlist = getWishlist();
   const index = wishlist.findIndex(item => {
-    if (typeof item === 'object' && item !== null) return item.id === productId;
-    return item === productId;
+    if (typeof item === 'object' && item !== null) return item.id == productId;
+    return item == productId;
   });
   
   if (index === -1) {
     if (typeof products !== 'undefined') {
-      const product = products.find(p => p.id === productId);
+      const product = products.find(p => p.id == productId);
       if (product) wishlist.push(product);
       else wishlist.push(productId);
     } else {
@@ -41,7 +41,7 @@ function renderWishlist() {
   
   const likedProducts = wishlistItems.map(item => {
     if (typeof item === 'object' && item !== null) return item;
-    if (typeof products !== 'undefined') return products.find(p => p.id === item);
+    if (typeof products !== 'undefined') return products.find(p => p.id == item);
     return null;
   }).filter(Boolean);
 
@@ -151,12 +151,7 @@ document.addEventListener("click", (e) => {
     }
   }
 
-  const likeBtn = e.target.closest('[data-action="like"]');
-  if (likeBtn) {
-    const id = parseInt(likeBtn.dataset.id);
-    toggleWishlist(id);
-    renderWishlist(); // Re-render to remove the item from the list
-  }
+
 });
 
 renderWishlist();
