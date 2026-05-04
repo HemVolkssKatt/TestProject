@@ -338,12 +338,13 @@
                 let html = '';
                 let grandTotal = 0;
                 cart.forEach(item => {
-                    const price = parsePrice(item.price);
-                    const itemSubtotal = price * item.qty;
+                    const price = parsePrice(String(item.price));
+                    const quantity = item.quantity || item.qty || 1;
+                    const itemSubtotal = price * quantity;
                     grandTotal += itemSubtotal;
                     html += `
                     <div class="summary-item">
-                        <span class="product-name">${item.name} <span class="product-qty">× ${item.qty}</span></span>
+                        <span class="product-name">${item.name} <span class="product-qty">× ${quantity}</span></span>
                         <span class="product-price">${formatCurrency(itemSubtotal)}</span>
                     </div>`;
                 });
@@ -392,8 +393,10 @@
                         placeOrderBtn.disabled = true;
                         placeOrderBtn.style.opacity = '0.7';
                         placeOrderBtn.textContent = 'Order Placed';
-                        // Optionally clear cart
-                        // localStorage.removeItem('cart');
+                        localStorage.removeItem('cart');
+                        setTimeout(() => {
+                            window.location.href = 'homepage.html';
+                        }, 2500);
                     }
                 } else {
                     errorMsg.style.display = 'block';

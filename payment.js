@@ -68,7 +68,8 @@ function loadCart() {
     state.products = cart.map(item => ({
         ...item,
         price: parsePrice(item.price),
-        emoji: "📦" // Default emoji
+        quantity: parseInt(item.quantity || item.qty) || 1,
+        emoji: "📦" 
     }));
 }
 
@@ -94,6 +95,7 @@ function renderProducts() {
   state.products.forEach(p => {
     const div = document.createElement("div");
     div.className = "product-item";
+    const quantity = parseInt(p.quantity || p.qty) || 1;
     div.innerHTML = `
       <div class="product-thumb">${p.emoji}</div>
       <div class="product-info">
@@ -101,11 +103,11 @@ function renderProducts() {
         <div class="product-desc">${p.description || "Furniture Item"}</div>
       </div>
       <div class="product-qty-price">
-        <div class="product-price">${formatCurrency(p.price * p.qty)}</div>
+        <div class="product-price">${formatCurrency(p.price * quantity)}</div>
         <div class="qty-control">
-          <button class="qty-btn" onclick="changeQty(${p.id}, -1)"><i class="fas fa-minus"></i></button>
-          <span class="qty-value" id="qty-${p.id}">${p.qty}</span>
-          <button class="qty-btn" onclick="changeQty(${p.id}, +1)"><i class="fas fa-plus"></i></button>
+          <button class="qty-btn" onclick="changeQty('${p.id}', -1)"><i class="fas fa-minus"></i></button>
+          <span class="qty-value" id="qty-${p.id}">${quantity}</span>
+          <button class="qty-btn" onclick="changeQty('${p.id}', +1)"><i class="fas fa-plus"></i></button>
         </div>
       </div>
     `;
@@ -116,15 +118,23 @@ function renderProducts() {
 function changeQty(id, delta) {
   const product = state.products.find(p => p.id == id);
   if (!product) return;
-  const newQty = product.qty + delta;
+  
+  let currentQty = parseInt(product.quantity || product.qty) || 1;
+  const newQty = currentQty + delta;
+  
   if (newQty < 1) { showToast("Minimum quantity is 1", "error"); return; }
   if (newQty > 10) { showToast("Maximum quantity is 10", "warning"); return; }
-  product.qty = newQty;
+  
+  if (product.quantity !== undefined) product.quantity = newQty;
+  else product.qty = newQty;
   
   // Sync back to localStorage
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const cartItem = cart.find(item => item.id == id);
-  if (cartItem) cartItem.qty = newQty;
+  if (cartItem) {
+    if (cartItem.quantity !== undefined) cartItem.quantity = newQty;
+    else cartItem.qty = newQty;
+  }
   localStorage.setItem('cart', JSON.stringify(cart));
 
   renderProducts();
@@ -191,7 +201,10 @@ function autofillCardFromSaved(rawNumber, name) {
    PRICE CALCULATION
 ======================== */
 function updatePrices() {
-  const subtotal = state.products.reduce((sum, p) => sum + p.price * p.qty, 0);
+  const subtotal = state.products.reduce((sum, p) => {
+    const qty = parseInt(p.quantity || p.qty) || 1;
+    return sum + (p.price * qty);
+  }, 0);
   let discount = 0;
   let ship = shippingBase;
 
@@ -536,7 +549,10 @@ function selectWallet(wallet) {
    EMI PLANS
 ======================== */
 function renderEmiPlans() {
-  const total = state.products.reduce((s, p) => s + p.price * p.qty, 0);
+  const total = state.products.reduce((s, p) => {
+    const qty = parseInt(p.quantity || p.qty) || 1;
+    return s + (p.price * qty);
+  }, 0);
   const plans = [
     { months: 3,  rate: 0,    label: "No Cost EMI" },
     { months: 6,  rate: 1.5,  label: "1.5% per month" },

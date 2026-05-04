@@ -13,7 +13,8 @@ const minRange = document.getElementById("minRange");
 const maxRange = document.getElementById("maxRange");
 const rangeFill = document.getElementById("rangeFill");
 const rangeMinText = document.getElementById("rangeMinText");
-const rangeMaxText = document.getElementById("rangeMaxText");
+const paginationNav = document.getElementById("pagination");
+const resetFiltersBtn = document.getElementById("resetFilters");
 
 let filteredTotal = typeof products !== 'undefined' ? products.length : 0;
 let currentSearchQuery = "";
@@ -27,21 +28,21 @@ function getWishlist() {
 function isProductLiked(productId) {
   const wishlist = getWishlist();
   return wishlist.some(item => {
-    if (typeof item === 'object' && item !== null) return item.id === productId;
-    return item === productId;
+    if (typeof item === 'object' && item !== null) return item.id == productId;
+    return item == productId;
   });
 }
 
 function toggleWishlist(productId) {
   let wishlist = getWishlist();
   const index = wishlist.findIndex(item => {
-    if (typeof item === 'object' && item !== null) return item.id === productId;
-    return item === productId;
+    if (typeof item === 'object' && item !== null) return item.id == productId;
+    return item == productId;
   });
 
   if (index === -1) {
     if (typeof products !== 'undefined') {
-      const product = products.find(p => p.id === productId);
+      const product = products.find(p => p.id == productId);
       if (product) wishlist.push(product);
       else wishlist.push(productId);
     } else {
@@ -66,7 +67,7 @@ function matchesSearch(p, query) {
   if (!query || query.trim() === "") return true;
   const q = query.toLowerCase().trim();
   const searchWords = q.split(/\s+/);
-  
+
   return searchWords.every(word => {
     const inName = p.name.toLowerCase().includes(word);
     const inSubtitle = p.subtitle && p.subtitle.toLowerCase().includes(word);
@@ -80,13 +81,13 @@ function matchesSearch(p, query) {
 
 function getVisibleProducts() {
   if (typeof products === 'undefined') return [];
-  
-  const perPage = showSelect ? Number(showSelect.value) || products.length : products.length;
+
   let items = [...products];
 
   const urlParams = new URLSearchParams(window.location.search);
   const selectedCategory = urlParams.get("category");
-  if (selectedCategory) {
+
+  if (selectedCategory && selectedCategory !== "all") {
     items = items.filter(p => p.category === selectedCategory);
   }
 
@@ -105,65 +106,72 @@ function getVisibleProducts() {
   if (minRange && maxRange) {
     let minVal = parseInt(minRange.value);
     let maxVal = parseInt(maxRange.value);
-
     const filterMin = Math.min(minVal, maxVal);
     const filterMax = Math.max(minVal, maxVal);
-
     items = items.filter(p => p.price >= filterMin && p.price <= filterMax);
+  }
+
+  if (sortSelect) {
+    const sort = sortSelect.value;
+    if (sort === "newest") {
+      items.sort((a, b) => b.id - a.id);
+    }
   }
 
   filteredTotal = items.length;
 
-  if (sortSelect) {
-    const sort = sortSelect.value;
-    switch (sort) {
-      case "newest":
-        items.sort((a, b) => b.id - a.id);
-        break;
-      case "default":
-      default:
-        break;
-    }
-  }
+  const perPage = showSelect ? Number(showSelect.value) || 16 : 16;
+  const start = (currentPage - 1) * perPage;
+  const end = start + perPage;
 
-  return items.slice(0, perPage);
+  return items.slice(start, end);
 }
 
-function initializeSearch() {
-  const searchInput = document.getElementById("searchInput");
-  if (!searchInput) return;
+function renderPagination() {
+  if (!paginationNav) return;
+  const perPage = showSelect ? Number(showSelect.value) || 16 : 16;
+  const totalPages = Math.ceil(filteredTotal / perPage);
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlQuery = urlParams.get("search");
-  if (urlQuery) {
-    searchInput.value = urlQuery;
-    currentSearchQuery = urlQuery;
-    const navSearch = document.getElementById("navSearch");
-    if (navSearch) navSearch.classList.add("is-open");
-    renderProducts();
+  if (totalPages <= 1) {
+    paginationNav.innerHTML = "";
+    return;
   }
 
-  searchInput.addEventListener("input", (e) => {
-    currentSearchQuery = e.target.value;
-    currentPage = 1;
-    renderProducts();
-  });
+  let html = "";
+  for (let i = 1; i <= totalPages; i++) {
+    html += `<button class="page-btn ${i === currentPage ? 'is-active' : ''}" data-page="${i}">${i}</button>`;
+  }
+  if (currentPage < totalPages) {
+    html += `<button class="page-btn" data-page="${currentPage + 1}">Next</button>`;
+  }
+  paginationNav.innerHTML = html;
 
-  const searchCloseBtn = document.getElementById("searchCloseBtn");
-  if (searchCloseBtn) {
-    searchCloseBtn.addEventListener("click", () => {
-      currentSearchQuery = "";
-      searchInput.value = "";
-      currentPage = 1;
+  paginationNav.querySelectorAll(".page-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      currentPage = parseInt(btn.dataset.page);
       renderProducts();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-  }
+  });
 }
 
 function renderProducts() {
   if (!productGrid) return;
 
   const items = getVisibleProducts();
+
+  if (items.length === 0) {
+    productGrid.innerHTML = `
+      <div class="no-results">
+        <i class="fa-solid fa-box-open"></i>
+        <h3>No products found</h3>
+        <p>Try adjusting your filters or search query to find what you're looking for.</p>
+      </div>
+    `;
+    updateResultsText();
+    renderPagination();
+    return;
+  }
 
   productGrid.innerHTML = items
     .map((p) => {
@@ -185,28 +193,13 @@ function renderProducts() {
               <button class="btn-cart" type="button">Add to cart</button>
               <div class="overlay-actions">
                 <button class="action-link" type="button" data-action="share">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 8a3 3 0 1 0-2.8-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M9 13l6-3M9 11l6 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <circle cx="18" cy="5" r="2" stroke="currentColor" stroke-width="2"/>
-                    <circle cx="6" cy="12" r="2" stroke="currentColor" stroke-width="2"/>
-                    <circle cx="18" cy="19" r="2" stroke="currentColor" stroke-width="2"/>
-                  </svg>
-                  Share
+                  <i class="fa-solid fa-share-nodes"></i> Share
                 </button>
                 <a class="action-link" href="comparsion.html">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 3H5v18h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M19 21h-5V3h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M10 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                  Compare
+                  <i class="fa-solid fa-right-left"></i> Compare
                 </a>
                 <button class="action-link ${isProductLiked(p.id) ? 'is-liked' : ''}" type="button" data-action="like" data-id="${p.id}">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="${isProductLiked(p.id) ? 'red' : 'none'}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 21s-7-4.6-9.3-9.1C1 8.5 3.2 6 6.2 6c1.7 0 3.2.9 3.8 2 .6-1.1 2.1-2 3.8-2 3 0 5.2 2.5 3.5 5.9C19 16.4 12 21 12 21Z" stroke="${isProductLiked(p.id) ? 'red' : 'currentColor'}" stroke-width="2" stroke-linejoin="round"/>
-                  </svg>
-                  Like
+                  <i class="fa-${isProductLiked(p.id) ? 'solid' : 'regular'} fa-heart" style="${isProductLiked(p.id) ? 'color: red;' : ''}"></i> Like
                 </button>
               </div>
             </div>
@@ -226,73 +219,41 @@ function renderProducts() {
     .join("");
 
   updateResultsText();
+  renderPagination();
 }
 
 function updateResultsText() {
   if (!resultsText) return;
   const perPage = showSelect ? Number(showSelect.value) || filteredTotal : filteredTotal;
-  const end = Math.min(perPage, filteredTotal);
+  const start = filteredTotal === 0 ? 0 : (currentPage - 1) * perPage + 1;
+  const end = Math.min(currentPage * perPage, filteredTotal);
 
   if (filteredTotal === 0) {
     resultsText.textContent = "Showing 0 results";
   } else {
-    resultsText.textContent = `Showing 1–${end} of ${filteredTotal} results`;
+    resultsText.textContent = `Showing ${start}–${end} of ${filteredTotal} results`;
   }
 }
 
-if (showSelect) showSelect.addEventListener("change", () => renderProducts());
-if (sortSelect) sortSelect.addEventListener("change", () => renderProducts());
-if (discountToggle) discountToggle.addEventListener("change", () => renderProducts());
-if (newToggle) newToggle.addEventListener("change", () => renderProducts());
+function initializeSearch() {
+  const searchInput = document.getElementById("searchInput");
+  if (!searchInput) return;
 
-function updateRange() {
-  if (!minRange || !maxRange || !rangeFill) return;
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlQuery = urlParams.get("search");
+  if (urlQuery) {
+    searchInput.value = urlQuery;
+    currentSearchQuery = urlQuery;
+    const navSearch = document.getElementById("navSearch");
+    if (navSearch) navSearch.classList.add("is-open");
+  }
 
-  let minVal = parseInt(minRange.value);
-  let maxVal = parseInt(maxRange.value);
-
-  const visualMin = Math.min(minVal, maxVal);
-  const visualMax = Math.max(minVal, maxVal);
-
-  const minPercent = (visualMin / minRange.max) * 100;
-  const maxPercent = (visualMax / maxRange.max) * 100;
-
-  rangeFill.style.left = minPercent + "%";
-  rangeFill.style.width = (maxPercent - minPercent) + "%";
-
-  if (rangeMinText) rangeMinText.textContent = formatRupiah(visualMin);
-  if (rangeMaxText) rangeMaxText.textContent = formatRupiah(visualMax);
-
-  renderProducts();
-}
-
-if (minRange) minRange.addEventListener("input", updateRange);
-if (maxRange) maxRange.addEventListener("input", updateRange);
-
-updateRange();
-
-if (filterBtn && filterPanel) {
-  filterBtn.addEventListener("click", () => {
-    const isHidden = filterPanel.hasAttribute("hidden");
-    if (isHidden) filterPanel.removeAttribute("hidden");
-    else filterPanel.setAttribute("hidden", "");
-  });
-}
-
-if (menuBtn && primaryNav) {
-  menuBtn.addEventListener("click", () => {
-    primaryNav.classList.toggle("is-open");
-  });
-}
-
-document.addEventListener("click", (e) => {
-  const likeBtn = e.target.closest('[data-action="like"]');
-  if (likeBtn) {
-    const id = parseInt(likeBtn.dataset.id);
-    toggleWishlist(id);
+  searchInput.addEventListener("input", (e) => {
+    currentSearchQuery = e.target.value;
+    currentPage = 1;
     renderProducts();
-  }
-});
+  });
+}
 
 function initializeViewToggle() {
   const viewButtons = document.querySelectorAll("[data-view]");
@@ -300,7 +261,7 @@ function initializeViewToggle() {
 
   const savedView = localStorage.getItem("productView") || "grid";
   const currentView = savedView === "list" ? "list-view" : "grid-view";
-  
+
   productGrid.classList.remove("grid-view", "list-view");
   productGrid.classList.add(currentView);
 
@@ -312,32 +273,83 @@ function initializeViewToggle() {
     btn.addEventListener("click", () => {
       const view = btn.dataset.view;
       if (!view) return;
-
       viewButtons.forEach((b) => b.classList.remove("is-active"));
       btn.classList.add("is-active");
-
       productGrid.classList.remove("grid-view", "list-view");
       productGrid.classList.add(view === "list" ? "list-view" : "grid-view");
-
       localStorage.setItem("productView", view);
-      renderProducts();
     });
   });
+}
 
-  // Initial render on page load
+if (showSelect) showSelect.addEventListener("change", () => { currentPage = 1; renderProducts(); });
+if (sortSelect) sortSelect.addEventListener("change", () => renderProducts());
+if (discountToggle) discountToggle.addEventListener("change", () => { currentPage = 1; renderProducts(); });
+if (newToggle) newToggle.addEventListener("change", () => { currentPage = 1; renderProducts(); });
+
+if (filterBtn && filterPanel) {
+  filterBtn.addEventListener("click", () => {
+    const isHidden = filterPanel.hidden;
+    filterPanel.hidden = !isHidden;
+    filterBtn.classList.toggle("is-active", !isHidden);
+  });
+}
+
+if (resetFiltersBtn) {
+  resetFiltersBtn.addEventListener("click", () => {
+    if (discountToggle) discountToggle.checked = false;
+    if (newToggle) newToggle.checked = false;
+    if (minRange) minRange.value = 0;
+    if (maxRange) maxRange.value = 10000000;
+    
+    // Reset search
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+      searchInput.value = "";
+      currentSearchQuery = "";
+    }
+    
+    // Clear URL category
+    const url = new URL(window.location);
+    url.searchParams.delete("category");
+    window.history.replaceState({}, '', url);
+
+    updateRange();
+  });
+}
+
+function updateRange() {
+  if (!minRange || !maxRange || !rangeFill) return;
+  let minVal = parseInt(minRange.value);
+  let maxVal = parseInt(maxRange.value);
+  const visualMin = Math.min(minVal, maxVal);
+  const visualMax = Math.max(minVal, maxVal);
+  const minPercent = (visualMin / minRange.max) * 100;
+  const maxPercent = (visualMax / maxRange.max) * 100;
+  rangeFill.style.left = minPercent + "%";
+  rangeFill.style.width = (maxPercent - minPercent) + "%";
+  if (rangeMinText) rangeMinText.textContent = formatRupiah(visualMin);
+  if (rangeMaxText) rangeMaxText.textContent = formatRupiah(visualMax);
+  currentPage = 1;
   renderProducts();
 }
 
-function initializeShop() {
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      initializeSearch();
-      initializeViewToggle();
-    });
-  } else {
-    initializeSearch();
-    initializeViewToggle();
-  }
+// Initial set of category dropdown if present in URL
+function syncUrlToFilters() {
+  // Category dropdown removed, but we still handle URL category filtering
 }
 
-initializeShop();
+if (minRange) minRange.addEventListener("input", updateRange);
+if (maxRange) maxRange.addEventListener("input", updateRange);
+
+
+
+function initializeShop() {
+  initializeSearch();
+  initializeViewToggle();
+  syncUrlToFilters();
+  updateRange();
+  renderProducts();
+}
+
+document.addEventListener("DOMContentLoaded", initializeShop);
