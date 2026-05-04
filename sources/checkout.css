@@ -269,6 +269,25 @@ body {
     display: block;
 }
 
+.inline-payment-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #B88E2F;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    margin-top: 5px;
+}
+
+.inline-payment-btn:hover {
+    background-color: #967325;
+    color: #fff;
+}
+
+
 .privacy-text {
     font-size: 16px;
     color: #000;

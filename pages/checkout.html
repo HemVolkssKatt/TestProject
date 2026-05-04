@@ -137,51 +137,55 @@
                     <span>Subtotal</span>
                 </div>
 
-                <div class="summary-item">
-                    <span class="product-name">Asgaard sofa <span class="product-qty">× <input type="number"
-                                id="quantity" value="1" min="1" class="qty-input"></span></span>
-                    <span class="product-price" id="itemPrice">Rs. 250,000.00</span>
+                <div id="checkoutItems">
+                    <!-- Dynamic items will be injected here -->
                 </div>
 
                 <div class="summary-row">
                     <span>Subtotal</span>
-                    <span id="subtotal">Rs. 250,000.00</span>
+                    <span id="subtotal">Rs. 0.00</span>
                 </div>
 
                 <div class="summary-row total-row">
                     <span>Total</span>
-                    <span class="total-price" id="total">Rs. 250,000.00</span>
+                    <span class="total-price" id="total">Rs. 0.00</span>
                 </div>
 
                 <hr class="summary-divider">
 
                 <!-- Payment Options -->
-                <div class="payment-option">
-                    <label class="payment-label active">
-                        <input type="radio" name="payment" value="bank" checked>
-                        <span class="radio-dot filled"></span>
-                        Direct Bank Transfer
-                    </label>
-                    <p class="payment-desc">
-                        Make your payment directly into our bank account. Please use your Order ID as the payment
-                        reference. Your order will not be shipped until the funds have cleared in our account.
-                    </p>
-                </div>
+                <div class="payment-options-container">
+                    <div class="payment-option">
+                        <label class="payment-label active">
+                            <input type="radio" name="payment" value="bank" checked>
+                            <span class="radio-dot filled"></span>
+                            Direct Bank Transfer
+                        </label>
+                        <p class="payment-desc">
+                            Make your payment directly into our bank account. Please use your Order ID as the payment
+                            reference. Your order will not be shipped until the funds have cleared in our account.
+                        </p>
+                    </div>
 
-                <div class="payment-option">
-                    <label class="payment-label">
-                        <input type="radio" name="payment" value="bank2">
-                        <span class="radio-dot"></span>
-                        Direct Bank Transfer
-                    </label>
-                </div>
+                    <div class="payment-option">
+                        <label class="payment-label">
+                            <input type="radio" name="payment" value="cod">
+                            <span class="radio-dot"></span>
+                            Cash On Delivery
+                        </label>
+                    </div>
 
-                <div class="payment-option">
-                    <label class="payment-label">
-                        <input type="radio" name="payment" value="cod">
-                        <span class="radio-dot"></span>
-                        Cash On Delivery
-                    </label>
+                    <div class="payment-option">
+                        <label class="payment-label">
+                            <input type="radio" name="payment" value="online">
+                            <span class="radio-dot"></span>
+                            Credit/Debit Card, UPI, Net Banking
+                        </label>
+                        <div class="payment-desc online-desc" style="display: none;">
+                            <p style="margin-bottom: 12px;">Securely pay using your preferred online method (Card, UPI, etc.).</p>
+                            <a href="payment.html" class="inline-payment-btn">Proceed to Payment &rarr;</a>
+                        </div>
+                    </div>
                 </div>
 
                 <p class="privacy-text">
@@ -284,72 +288,123 @@
     </footer>
 
     <script>
-        // Payment Radio Toggle
-        const paymentLabels = document.querySelectorAll(".payment-label");
-        paymentLabels.forEach(label => {
-            label.addEventListener("click", function () {
-                paymentLabels.forEach(l => l.classList.remove("active"));
-                paymentLabels.forEach(l => l.querySelector(".radio-dot").classList.remove("filled"));
+        document.addEventListener('DOMContentLoaded', () => {
+            // Payment Radio Toggle
+            const paymentLabels = document.querySelectorAll(".payment-label");
+            const onlineDesc = document.querySelector(".online-desc");
 
-                this.classList.add("active");
-                this.querySelector(".radio-dot").classList.add("filled");
-            });
-        });
+            paymentLabels.forEach(label => {
+                label.addEventListener("click", function () {
+                    paymentLabels.forEach(l => l.classList.remove("active"));
+                    paymentLabels.forEach(l => l.querySelector(".radio-dot").classList.remove("filled"));
 
-        // Dynamic Price Update
-        const qtyInput = document.getElementById('quantity');
-        const itemPriceSpan = document.getElementById('itemPrice');
-        const subtotalSpan = document.getElementById('subtotal');
-        const totalSpan = document.getElementById('total');
-        const unitPrice = 250000;
+                    this.classList.add("active");
+                    this.querySelector(".radio-dot").classList.add("filled");
+                    
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
 
-        function updatePrices() {
-            const qty = parseInt(qtyInput.value) || 1;
-            const totalAmount = qty * unitPrice;
-            const formattedAmount = "Rs. " + totalAmount.toLocaleString('en-IN', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
+                    if (radio.value === 'online') {
+                        onlineDesc.style.display = 'block';
+                    } else {
+                        onlineDesc.style.display = 'none';
+                    }
+                });
             });
 
-            itemPriceSpan.textContent = formattedAmount;
-            subtotalSpan.textContent = formattedAmount;
-            totalSpan.textContent = formattedAmount;
-        }
+            // Dynamic Cart Loading
+            const checkoutItems = document.getElementById('checkoutItems');
+            const subtotalSpan = document.getElementById('subtotal');
+            const totalSpan = document.getElementById('total');
 
-        qtyInput.addEventListener('input', updatePrices);
+            function formatCurrency(value) {
+                return 'Rs. ' + value.toLocaleString('en-IN', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+            }
 
-        // Place Order Logic
-        const placeOrderBtn = document.getElementById('placeOrderBtn');
-        const successMsg = document.getElementById('orderSuccessMsg');
-        const errorMsg = document.getElementById('orderErrorMsg');
-        const requiredFields = ['firstName', 'lastName', 'street', 'city', 'zip', 'phone', 'email'];
+            function parsePrice(priceStr) {
+                return parseFloat(priceStr.replace(/[^0-9.-]+/g, ""));
+            }
 
-        placeOrderBtn.addEventListener('click', function() {
-            let allFilled = true;
-            successMsg.style.display = 'none';
-            errorMsg.style.display = 'none';
+            function renderCheckout() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                if (cart.length === 0) {
+                    checkoutItems.innerHTML = '<p style="padding: 10px;">Cart is empty.</p>';
+                    return;
+                }
 
-            requiredFields.forEach(fieldId => {
-                const field = document.getElementById(fieldId);
-                if (!field.value.trim()) {
-                    field.style.borderColor = 'red';
-                    allFilled = false;
+                let html = '';
+                let grandTotal = 0;
+                cart.forEach(item => {
+                    const price = parsePrice(String(item.price));
+                    const quantity = item.quantity || item.qty || 1;
+                    const itemSubtotal = price * quantity;
+                    grandTotal += itemSubtotal;
+                    html += `
+                    <div class="summary-item">
+                        <span class="product-name">${item.name} <span class="product-qty">× ${quantity}</span></span>
+                        <span class="product-price">${formatCurrency(itemSubtotal)}</span>
+                    </div>`;
+                });
+                checkoutItems.innerHTML = html;
+                subtotalSpan.textContent = formatCurrency(grandTotal);
+                totalSpan.textContent = formatCurrency(grandTotal);
+            }
+
+            renderCheckout();
+
+            // Place Order Logic
+            const placeOrderBtn = document.getElementById('placeOrderBtn');
+            const successMsg = document.getElementById('orderSuccessMsg');
+            const errorMsg = document.getElementById('orderErrorMsg');
+            const requiredFields = ['firstName', 'lastName', 'street', 'city', 'zip', 'phone', 'email'];
+
+            placeOrderBtn.addEventListener('click', function() {
+                let allFilled = true;
+                successMsg.style.display = 'none';
+                errorMsg.style.display = 'none';
+
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (!field.value.trim()) {
+                        field.style.borderColor = 'red';
+                        allFilled = false;
+                    } else {
+                        field.style.borderColor = '#9F9F9F';
+                    }
+                });
+
+                if (allFilled) {
+                    const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+                    
+                    if (selectedPayment === 'online') {
+                        // Store billing info temporarily for payment page if needed
+                        const billingInfo = {};
+                        requiredFields.forEach(id => billingInfo[id] = document.getElementById(id).value);
+                        localStorage.setItem('billingInfo', JSON.stringify(billingInfo));
+                        
+                        // Redirect to payment page
+                        window.location.href = 'payment.html';
+                    } else {
+                        successMsg.style.display = 'block';
+                        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        placeOrderBtn.disabled = true;
+                        placeOrderBtn.style.opacity = '0.7';
+                        placeOrderBtn.textContent = 'Order Placed';
+                        localStorage.removeItem('cart');
+                        setTimeout(() => {
+                            window.location.href = 'homepage.html';
+                        }, 2500);
+                    }
                 } else {
-                    field.style.borderColor = '#9F9F9F';
+                    errorMsg.style.display = 'block';
+                    errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             });
-
-            if (allFilled) {
-                successMsg.style.display = 'block';
-                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                placeOrderBtn.disabled = true;
-                placeOrderBtn.style.opacity = '0.7';
-                placeOrderBtn.textContent = 'Order Placed';
-            } else {
-                errorMsg.style.display = 'block';
-                errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
         });
     </script>
+
 </body>
 </html>

@@ -1,82 +1,98 @@
-const products = [
+const baseProducts = [
   {
-    id: 1,
     name: "Syltherine",
     subtitle: "Stylish cafe chair",
-    price: 25004500,
+    category: "living",
+    price: 2500000,
     oldPrice: 3500000,
     badgeType: "sale",
     badgeText: "-30%",
-    image: "../assets/Syltherine.png"
+    image: "../assets/syntenise.png",
+    keywords: ["chair", "cafe", "stylish", "seating", "living"]
   },
   {
-    id: 2,
     name: "Leviosa",
     subtitle: "Stylish cafe chair",
+    category: "living",
     price: 2500000,
     oldPrice: null,
     badgeType: null,
     badgeText: "",
-    image: "../assets/Leviosa.png"
+    image: "../assets/leviosa.png",
+    keywords: ["chair", "cafe", "stylish", "seating", "living"]
   },
   {
-    id: 3,
     name: "Lolito",
     subtitle: "Luxury big sofa",
+    category: "living",
     price: 7000000,
     oldPrice: 14000000,
     badgeType: "sale",
     badgeText: "-50%",
-    image: "../assets/Lolito.png"
+    image: "../assets/lolito.png",
+    keywords: ["sofa", "couch", "luxury", "big", "living room", "seating"]
   },
   {
-    id: 4,
     name: "Respira",
     subtitle: "Outdoor bar table and stool",
+    category: "dining",
     price: 500000,
     oldPrice: null,
     badgeType: "new",
     badgeText: "New",
-    image: "../assets/Respira.jpg"
+    image: "../assets/livingroom.jpg",
+    keywords: ["table", "stool", "bar", "outdoor", "garden", "dining"]
   },
   {
-    id: 5,
     name: "Grifo",
     subtitle: "Night Lamp",
+    category: "bedroom",
     price: 1500000,
     oldPrice: null,
     badgeType: null,
     badgeText: "",
-    image: "../assets/Grifo.png"
+    image: "../assets/Grifo.png",
+    keywords: ["lamp", "night", "bedroom", "lighting"]
   },
   {
-    id: 6,
     name: "Muggo",
     subtitle: "Small mug",
+    category: "dining",
     price: 150000,
     oldPrice: null,
     badgeType: "new",
     badgeText: "New",
-    image: "../assets/muggo.png"
+    image: "../assets/muggo.png",
+    keywords: ["mug", "cup", "dining", "kitchen"]
   },
   {
-    id: 7,
     name: "Pingky",
     subtitle: "Luxury big sofa",
+    category: "living",
     price: 7000000,
     oldPrice: 14000000,
     badgeType: "sale",
     badgeText: "-50%",
-    image: "../assets/pingky.jpg"
+    image: "../assets/pingky.jpg",
+    keywords: ["sofa", "pink", "luxury", "living"]
   },
   {
-    id: 8,
     name: "Potty",
     subtitle: "Minimalist flower pot",
+    category: "bedroom",
     price: 500000,
     oldPrice: null,
     badgeType: "new",
     badgeText: "New",
-    image: "../assets/potty.jpg"
+    image: "../assets/potty.jpg",
+    keywords: ["pot", "plant", "bedroom", "garden"]
   }
 ];
+
+// Generate 48 products based on the 8 core products
+const products = Array.from({ length: 48 }, (_, i) => ({
+  id: i + 1,
+  ...baseProducts[i % 8],
+  // Add some variety to names to show it's working
+  name: i >= 8 ? `${baseProducts[i % 8].name} ${Math.floor(i / 8) + 1}` : baseProducts[i % 8].name
+}));

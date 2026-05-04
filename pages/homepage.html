@@ -33,10 +33,10 @@
             </ul>
 
             <div class="nav-icons">
-                <a href="#" title="Account">
+                <a href="Login.html" title="Account">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
-                            d="M23.3333 14V8.16669H25.6666V15.1667H23.3333M23.3333 19.8334H25.6666V17.5H23.3333M11.6666 15.1667C14.7816 15.1667 20.9999 16.73 20.9999 19.8334V23.3334H2.33325V19.8334C2.33325 16.73 8.55159 15.1667 11.6666 15.1667ZM11.6666 4.66669C12.9043 4.66669 14.0912 5.15835 14.9664 6.03352C15.8416 6.90869 16.3333 8.09568 16.3333 9.33335C16.3333 10.571 15.8416 11.758 14.9664 12.6332C14.0912 13.5084 12.9043 14 11.6666 14C10.4289 14 9.24192 13.5084 8.36675 12.6332C7.49158 11.758 6.99992 10.571 6.99992 9.33335C6.99992 8.09568 7.49158 6.90869 8.36675 6.03352C9.24192 5.15835 10.4289 4.66669 11.6666 4.66669ZM11.6666 17.3834C8.20159 17.3834 4.54992 19.0867 4.54992 19.8334V21.1167H18.7833V19.8334C18.7833 19.0867 15.1316 17.3834 11.6666 17.3834ZM11.6666 6.88335C11.0168 6.88335 10.3936 7.14148 9.93417 7.60094C9.47471 8.06041 9.21659 8.68357 9.21659 9.33335C9.21659 9.98313 9.47471 10.6063 9.93417 11.0658C10.3936 11.5252 11.0168 11.7834 11.6666 11.7834C12.3164 11.7834 12.9395 11.5252 13.399 11.0658C13.8585 10.6063 14.1166 9.98313 14.1166 9.33335C14.1166 8.68357 13.8585 8.06041 13.399 7.60094C12.9395 7.14148 12.3164 6.88335 11.6666 6.88335Z"
+                            d="M23.3333 14V8.16669H25.6666V15.1667H23.3333M23.3333 19.8334H25.6666V17.5H23.3333M11.6666 15.1667C14.7816 15.1667 20.9999 16.73 20.9999 19.8334V23.3334H2.33325V19.8334C2.33325 16.73 8.55159 15.1667 11.6666 15.1667ZM11.6666 4.66669C12.9043 4.66669 14.0912 5.15835 14.9664 6.03352C15.8416 6.90869 16.3333 8.09568 16.3333 9.33335C16.3333 10.571 15.8416 11.758 14.9664 12.6332C14.0912 13.5084 12.9043 14 11.6666 14C10.4289 14 9.24192 13.5084 8.36675 12.6332C7.49158 11.758 6.99992 10.571 6.99992 9.33335C6.99992 8.09568 7.49158 6.90869 8.36675 6.03352C9.24192 5.15835 10.4289 4.66669 11.6666 4.66669ZM11.6666 17.3834C8.20159 17.3834 4.54992 19.0867 4.54992 19.8334V21.1167H18.7833V19.8334C18.7833 19.0867 15.1316 17.3834 11.6666 17.3834ZM11.6666 6.88335C11.0168 6.88335 10.3936 7.14148 9.93417 7.60094C9.47471 8.06041 9.21659 8.68357 9.21659 9.33335C9.21659 9.98313 9.47471 11.0658C10.3936 11.5252 11.0168 11.7834 11.6666 11.7834C12.3164 11.7834 12.9395 11.5252 13.399 11.0658C13.8585 10.6063 14.1166 9.98313 14.1166 9.33335C14.1166 8.68357 13.8585 8.06041 13.399 7.60094C12.9395 7.14148 12.3164 6.88335 11.6666 6.88335Z"
                             fill="currentColor" />
                     </svg>
                 </a>
@@ -74,16 +74,19 @@
             <h2>Browse The Range</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </div>
+
         <div class="range-grid">
-            <div class="range-item">
+            <div class="range-item" data-category="dining">
                 <img src="../assets/Dinning.png" alt="Dining">
                 <h3>Dining</h3>
             </div>
-            <div class="range-item">
+
+            <div class="range-item" data-category="living">
                 <img src="../assets/Living.png" alt="Living">
                 <h3>Living</h3>
             </div>
-            <div class="range-item">
+
+            <div class="range-item" data-category="bedroom">
                 <img src="../assets/bedroom.png" alt="Bedroom">
                 <h3>Bedroom</h3>
             </div>
@@ -98,19 +101,19 @@
 
             <div class="product-item" data-id="1" data-name="Syltherine">
                 <div class="product-img-wrapper">
-                    <a href="product.html"><img src="../assets/syntenise.png" alt="Syltherine"></a>
+                    <a href="product.html?id=1"><img src="../assets/syntenise.png" alt="Syltherine"></a>
                     <div class="badge badge-discount">-30%</div>
                     <div class="product-overlay">
                         <button class="add-to-cart">Add to cart</button>
                         <div class="overlay-actions">
                             <a href="#"><i class="fa-solid fa-share-nodes"></i> Share</a>
                             <a href="comparsion.html"><i class="fa-solid fa-right-left"></i> Compare</a>
-                            <a href="#"><i class="fa-regular fa-heart"></i> Like</a>
+                            <a href="#" data-action="like" data-id="1"><i class="fa-regular fa-heart"></i> Like</a>
                         </div>
                     </div>
                 </div>
                 <div class="product-info">
-                    <h3><a href="product.html">Syltherine</a></h3>
+                    <h3><a href="product.html?id=1">Syltherine</a></h3>
                     <p class="description">Stylish cafe chair</p>
                     <div class="price-box">
                         <span class="price">Rp 2.500.000</span>
@@ -122,18 +125,18 @@
             <!-- Product 2: Leviosa -->
             <div class="product-item" data-id="2" data-name="Leviosa">
                 <div class="product-img-wrapper">
-                    <a href="product.html"><img src="../assets/leviosa.png" alt="Leviosa"></a>
+                    <a href="product.html?id=2"><img src="../assets/leviosa.png" alt="Leviosa"></a>
                     <div class="product-overlay">
                         <button class="add-to-cart">Add to cart</button>
                         <div class="overlay-actions">
                             <a href="#"><i class="fa-solid fa-share-nodes"></i> Share</a>
                             <a href="comparsion.html"><i class="fa-solid fa-right-left"></i> Compare</a>
-                            <a href="#"><i class="fa-regular fa-heart"></i> Like</a>
+                            <a href="#" data-action="like" data-id="2"><i class="fa-regular fa-heart"></i> Like</a>
                         </div>
                     </div>
                 </div>
                 <div class="product-info">
-                    <h3><a href="product.html">Leviosa</a></h3>
+                    <h3><a href="product.html?id=2">Leviosa</a></h3>
                     <p class="description">Stylish cafe chair</p>
                     <div class="price-box">
                         <span class="price">Rp 2.500.000</span>
@@ -144,19 +147,19 @@
             <!-- Product 3: Lolito -->
             <div class="product-item" data-id="3" data-name="Lolito">
                 <div class="product-img-wrapper">
-                    <a href="product.html"><img src="../assets/lolito.png" alt="Lolito"></a>
+                    <a href="product.html?id=3"><img src="../assets/lolito.png" alt="Lolito"></a>
                     <div class="badge badge-discount">-50%</div>
                     <div class="product-overlay">
                         <button class="add-to-cart">Add to cart</button>
                         <div class="overlay-actions">
                             <a href="#"><i class="fa-solid fa-share-nodes"></i> Share</a>
                             <a href="comparsion.html"><i class="fa-solid fa-right-left"></i> Compare</a>
-                            <a href="#"><i class="fa-regular fa-heart"></i> Like</a>
+                            <a href="#" data-action="like" data-id="3"><i class="fa-regular fa-heart"></i> Like</a>
                         </div>
                     </div>
                 </div>
                 <div class="product-info">
-                    <h3><a href="product.html">Lolito</a></h3>
+                    <h3><a href="product.html?id=3">Lolito</a></h3>
                     <p class="description">Luxury big sofa</p>
                     <div class="price-box">
                         <span class="price">Rp 7.000.000</span>
@@ -168,19 +171,19 @@
             <!-- Product 4: Respira -->
             <div class="product-item" data-id="4" data-name="Respira">
                 <div class="product-img-wrapper">
-                    <a href="product.html"><img src="../assets/livingroom.jpg" alt="Respira"></a>
+                    <a href="product.html?id=4"><img src="../assets/livingroom.jpg" alt="Respira"></a>
                     <div class="badge badge-new">New</div>
                     <div class="product-overlay">
                         <button class="add-to-cart">Add to cart</button>
                         <div class="overlay-actions">
                             <a href="#"><i class="fa-solid fa-share-nodes"></i> Share</a>
                             <a href="comparsion.html"><i class="fa-solid fa-right-left"></i> Compare</a>
-                            <a href="#"><i class="fa-regular fa-heart"></i> Like</a>
+                            <a href="#" data-action="like" data-id="4"><i class="fa-regular fa-heart"></i> Like</a>
                         </div>
                     </div>
                 </div>
                 <div class="product-info">
-                    <h3><a href="product.html">Respira</a></h3>
+                    <h3><a href="product.html?id=4">Respira</a></h3>
                     <p class="description">Outdoor bar table and stool</p>
                     <div class="price-box">
                         <span class="price">Rp 500.000</span>
@@ -190,18 +193,18 @@
             <!--Product 5:grifo-->
             <div class="product-item" data-id="5" data-name="Grifo">
                 <div class="product-img-wrapper">
-                    <a href="product.html"><img src="../assets/Grifo.png" alt="Grifo"></a>
+                    <a href="product.html?id=5"><img src="../assets/Grifo.png" alt="Grifo"></a>
                     <div class="product-overlay">
-                        <button class="add-to-cart">add to cart</button>
+                        <button class="add-to-cart">Add to cart</button>
                         <div class="overlay-actions">
                             <a href="#"><i class="fa-solid fa-share-nodes"></i> Share</a>
                             <a href="comparsion.html"><i class="fa-solid fa-right-left"></i> Compare</a>
-                            <a href="#"><i class="fa-regular fa-heart"></i> Like</a>
+                            <a href="#" data-action="like" data-id="5"><i class="fa-regular fa-heart"></i> Like</a>
                         </div>
                     </div>
                 </div>
                 <div class="product-info">
-                    <h3><a href="product.html">Grifo</a></h3>
+                    <h3><a href="product.html?id=5">Grifo</a></h3>
                     <p class="description">Night Lamp</p>
                     <div class="price-box">
                         <span class="price">Rp 1.500.000</span>
@@ -212,19 +215,19 @@
             <!--Product 6:muggo-->
             <div class="product-item" data-id="6" data-name="Muggo">
                 <div class="product-img-wrapper">
-                    <a href="product.html"><img src="../assets/muggo.png" alt="Muggo"></a>
+                    <a href="product.html?id=6"><img src="../assets/muggo.png" alt="Muggo"></a>
                     <div class="badge badge-new">New</div>
                     <div class="product-overlay">
-                        <button class="add-to-cart">add to cart</button>
+                        <button class="add-to-cart">Add to cart</button>
                         <div class="overlay-actions">
                             <a href="#"><i class="fa-solid fa-share-nodes"></i> Share</a>
                             <a href="comparsion.html"><i class="fa-solid fa-right-left"></i> Compare</a>
-                            <a href="#"><i class="fa-regular fa-heart"></i> Like</a>
+                            <a href="#" data-action="like" data-id="6"><i class="fa-regular fa-heart"></i> Like</a>
                         </div>
                     </div>
                 </div>
                 <div class="product-info">
-                    <h3><a href="product.html">Muggo</a></h3>
+                    <h3><a href="product.html?id=6">Muggo</a></h3>
                     <p class="description">small mug</p>
                     <div class="price-box">
                         <span class="price">Rp 150.000</span>
@@ -235,19 +238,19 @@
             <!--Product 7:pingky-->
             <div class="product-item" data-id="7" data-name="Pingky">
                 <div class="product-img-wrapper">
-                    <a href="product.html"><img src="../assets/pingky.jpg" alt="pingky"></a>
+                    <a href="product.html?id=7"><img src="../assets/pingky.jpg" alt="pingky"></a>
                     <div class="badge badge-discount">-50%</div>
                     <div class="product-overlay">
                         <button class="add-to-cart">Add to cart</button>
                         <div class="overlay-actions">
                             <a href="#"><i class="fa-solid fa-share-nodes"></i> Share</a>
                             <a href="comparsion.html"><i class="fa-solid fa-right-left"></i> Compare</a>
-                            <a href="#"><i class="fa-regular fa-heart"></i> Like</a>
+                            <a href="#" data-action="like" data-id="7"><i class="fa-regular fa-heart"></i> Like</a>
                         </div>
                     </div>
                 </div>
                 <div class="product-info">
-                    <h3><a href="product.html">pingky</a></h3>
+                    <h3><a href="product.html?id=7">pingky</a></h3>
                     <p class="description">Luxury big sofa</p>
                     <div class="price-box">
                         <span class="price">Rp 7.000.000</span>
@@ -259,20 +262,20 @@
             <!--Product 8:potty-->
             <div class="product-item" data-id="8" data-name="Potty">
                 <div class="product-img-wrapper">
-                    <a href="product.html"><img src="../assets/potty.jpg" alt="potty"></a>
+                    <a href="product.html?id=8"><img src="../assets/potty.jpg" alt="potty"></a>
                     <div class="badge badge-new">New</div>
                     <div class="product-overlay">
                         <button class="add-to-cart">Add to cart</button>
                         <div class="overlay-actions">
                             <a href="#"><i class="fa-solid fa-share-nodes"></i> Share</a>
                             <a href="comparsion.html"><i class="fa-solid fa-right-left"></i> Compare</a>
-                            <a href="#"><i class="fa-regular fa-heart"></i> Like</a>
+                            <a href="#" data-action="like" data-id="8"><i class="fa-regular fa-heart"></i> Like</a>
                         </div>
                     </div>
                 </div>
                 <div class="product-info">
-                    <h3><a href="product.html">Respira</a></h3>
-                    <p class="description">Outdoor bar table and stool</p>
+                    <h3><a href="product.html?id=8">Potty</a></h3>
+                    <p class="description">Minimalist plant pot</p>
                     <div class="price-box">
                         <span class="price">Rp 500.000</span>
                     </div>
@@ -414,7 +417,7 @@
                     <li><a href="homepage.html">Home</a></li>
                     <li><a href="Shop.html">Shop</a></li>
                     <li><a href="About.html">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
 
@@ -422,7 +425,7 @@
             <div class="footer-column footer-help">
                 <h3 class="footer-title">Help</h3>
                 <ul>
-                    <li><a href="#">Payment Options</a></li>
+                    <li><a href="payment.html">Payment Options</a></li>
                     <li><a href="PrivacyPolicy.html">Privacy Policies</a></li>
                     <li><a href="returns.html">Returns</a></li>
                 </ul>
@@ -446,8 +449,7 @@
 
     <script src="../products-data.js"></script>
     <script src="../cart-handler.js"></script>
-
-    <script src="../sources/products.js"></script>
+    <script src="../dlb.js"></script>
     <script src="../homepage.js"></script>
     <script src="../expand-search.js"></script>
     <script>
@@ -504,5 +506,4 @@
         });
     </script>
 </body>
-
 </html>

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,10 +16,12 @@
       text-align: center;
       padding: 80px 16px;
     }
+
     .wishlist-empty h2 {
       font-size: 32px;
       margin-bottom: 24px;
     }
+
     .btn-shop {
       display: inline-block;
       padding: 12px 32px;
@@ -30,49 +33,61 @@
     }
   </style>
 </head>
+
 <body>
- 
+
   <header class="navbar">
     <div class="navbar__inner">
       <a class="brand" href="homepage.html">
         <img class="brand__logo" src="../assets/logo.png" alt="Furniro logo">
         <span class="brand__name">Furniro</span>
       </a>
- 
+
       <nav class="navlinks" id="primaryNav" aria-label="Primary navigation">
         <a class="navlinks__link" href="homepage.html">Home</a>
         <a class="navlinks__link" href="Shop.html">Shop</a>
         <a class="navlinks__link" href="About.html">About</a>
         <a class="navlinks__link" href="contact.html">Contact</a>
       </nav>
- 
+
       <div class="navicons" aria-label="Header actions">
         <button class="navicons__btn" type="button" aria-label="Account">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M23.3333 14V8.16669H25.6666V15.1667H23.3333M23.3333 19.8334H25.6666V17.5H23.3333M11.6666 15.1667C14.7816 15.1667 20.9999 16.73 20.9999 19.8334V23.3334H2.33325V19.8334C2.33325 16.73 8.55159 15.1667 11.6666 15.1667ZM11.6666 4.66669C12.9043 4.66669 14.0912 5.15835 14.9664 6.03352C15.8416 6.90869 16.3333 8.09568 16.3333 9.33335C16.3333 10.571 15.8416 11.758 14.9664 12.6332C14.0912 13.5084 12.9043 14 11.6666 14C10.4289 14 9.24192 13.5084 8.36675 12.6332C7.49158 11.758 6.99992 10.571 6.99992 9.33335C6.99992 8.09568 7.49158 6.90869 8.36675 6.03352C9.24192 5.15835 10.4289 4.66669 11.6666 4.66669ZM11.6666 17.3834C8.20159 17.3834 4.54992 19.0867 4.54992 19.8334V21.1167H18.7833V19.8334C18.7833 19.0867 15.1316 17.3834 11.6666 17.3834ZM11.6666 6.88335C11.0168 6.88335 10.3936 7.14148 9.93417 7.60094C9.47471 8.06041 9.21659 8.68357 9.21659 9.33335C9.21659 9.98313 9.47471 10.6063 9.93417 11.0658C10.3936 11.5252 11.0168 11.7834 11.6666 11.7834C12.3164 11.7834 12.9395 11.5252 13.399 11.0658C13.8585 10.6063 14.1166 9.98313 14.1166 9.33335C14.1166 8.68357 13.8585 8.06041 13.399 7.60094C12.9395 7.14148 12.3164 6.88335 11.6666 6.88335Z" fill="currentColor"/>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true">
+            <path
+              d="M23.3333 14V8.16669H25.6666V15.1667H23.3333M23.3333 19.8334H25.6666V17.5H23.3333M11.6666 15.1667C14.7816 15.1667 20.9999 16.73 20.9999 19.8334V23.3334H2.33325V19.8334C2.33325 16.73 8.55159 15.1667 11.6666 15.1667ZM11.6666 4.66669C12.9043 4.66669 14.0912 5.15835 14.9664 6.03352C15.8416 6.90869 16.3333 8.09568 16.3333 9.33335C16.3333 10.571 15.8416 11.758 14.9664 12.6332C14.0912 13.5084 12.9043 14 11.6666 14C10.4289 14 9.24192 13.5084 8.36675 12.6332C7.49158 11.758 6.99992 10.571 6.99992 9.33335C6.99992 8.09568 7.49158 6.90869 8.36675 6.03352C9.24192 5.15835 10.4289 4.66669 11.6666 4.66669ZM11.6666 17.3834C8.20159 17.3834 4.54992 19.0867 4.54992 19.8334V21.1167H18.7833V19.8334C18.7833 19.0867 15.1316 17.3834 11.6666 17.3834ZM11.6666 6.88335C11.0168 6.88335 10.3936 7.14148 9.93417 7.60094C9.47471 8.06041 9.21659 8.68357 9.21659 9.33335C9.21659 9.98313 9.47471 10.6063 9.93417 11.0658C10.3936 11.5252 11.0168 11.7834 11.6666 11.7834C12.3164 11.7834 12.9395 11.5252 13.399 11.0658C13.8585 10.6063 14.1166 9.98313 14.1166 9.33335C14.1166 8.68357 13.8585 8.06041 13.399 7.60094C12.9395 7.14148 12.3164 6.88335 11.6666 6.88335Z"
+              fill="currentColor" />
           </svg>
         </button>
- 
+
         <div class="nav-search" id="navSearch">
           <button class="nav-search__toggle" id="searchToggleBtn" type="button" aria-label="Search">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M24.5 24.5L19.2664 19.257M22.1667 12.25C22.1667 14.88 21.1219 17.4024 19.2622 19.2621C17.4024 21.1219 14.8801 22.1666 12.25 22.1666C9.61998 22.1666 7.09763 21.1219 5.2379 19.2621C3.37816 17.4024 2.33337 14.88 2.33337 12.25C2.33337 9.61992 3.37816 7.09757 5.2379 5.23784C7.09763 3.3781 9.61998 2.33331 12.25 2.33331C14.8801 2.33331 17.4024 3.3781 19.2622 5.23784C21.1219 7.09757 22.1667 9.61992 22.1667 12.25V12.25Z" stroke="black" stroke-width="2" stroke-linecap="round" />
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true">
+              <path
+                d="M24.5 24.5L19.2664 19.257M22.1667 12.25C22.1667 14.88 21.1219 17.4024 19.2622 19.2621C17.4024 21.1219 14.8801 22.1666 12.25 22.1666C9.61998 22.1666 7.09763 21.1219 5.2379 19.2621C3.37816 17.4024 2.33337 14.88 2.33337 12.25C2.33337 9.61992 3.37816 7.09757 5.2379 5.23784C7.09763 3.3781 9.61998 2.33331 12.25 2.33331C14.8801 2.33331 17.4024 3.3781 19.2622 5.23784C21.1219 7.09757 22.1667 9.61992 22.1667 12.25V12.25Z"
+                stroke="black" stroke-width="2" stroke-linecap="round" />
             </svg>
           </button>
           <div class="nav-search__box" id="navSearchBox">
             <input type="text" id="searchInput" placeholder="Search products..." autocomplete="off">
-            <button class="nav-search__close" id="searchCloseBtn" type="button" aria-label="Close search">&times;</button>
+            <button class="nav-search__close" id="searchCloseBtn" type="button"
+              aria-label="Close search">&times;</button>
           </div>
         </div>
- 
+
         <a href="wishlist.html" class="navicons__btn is-active" aria-label="Wishlist">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M8.16671 3.5C4.94554 3.5 2.33337 6.08533 2.33337 9.275C2.33337 11.8498 3.35421 17.9608 13.4027 24.1383C13.5827 24.2479 13.7893 24.3058 14 24.3058C14.2107 24.3058 14.4174 24.2479 14.5974 24.1383C24.6459 17.9608 25.6667 11.8498 25.6667 9.275C25.6667 6.08533 23.0545 3.5 19.8334 3.5C16.6122 3.5 14 7 14 7C14 7 11.3879 3.5 8.16671 3.5Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true">
+            <path
+              d="M8.16671 3.5C4.94554 3.5 2.33337 6.08533 2.33337 9.275C2.33337 11.8498 3.35421 17.9608 13.4027 24.1383C13.5827 24.2479 13.7893 24.3058 14 24.3058C14.2107 24.3058 14.4174 24.2479 14.5974 24.1383C24.6459 17.9608 25.6667 11.8498 25.6667 9.275C25.6667 6.08533 23.0545 3.5 19.8334 3.5C16.6122 3.5 14 7 14 7C14 7 11.3879 3.5 8.16671 3.5Z"
+              stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </a>
- 
+
         <a href="cart.html" class="navicons__btn" aria-label="Cart">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true">
             <path d="M6.5 6h15l-1.5 8.5H8.2L6.5 6Z" stroke="#000" stroke-width="1.8" stroke-linejoin="round" />
             <path d="M6.5 6 5.8 3.8H3" stroke="#000" stroke-width="1.8" stroke-linecap="round" />
             <path d="M9 20a1.2 1.2 0 1 0 0-2.4A1.2 1.2 0 0 0 9 20Z" fill="#000" />
@@ -82,7 +97,7 @@
       </div>
     </div>
   </header>
- 
+
   <section class="page-hero" style="--hero-bg: url('../assets/Shop_Home.jpg');" aria-label="Wishlist hero">
     <div class="page-hero__inner">
       <h1 class="page-hero__title">Wishlist</h1>
@@ -90,14 +105,15 @@
         <a href="homepage.html">Home</a>
         <span class="breadcrumb__sep" aria-hidden="true">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
           </svg>
         </span>
         <span aria-current="page">Wishlist</span>
       </nav>
     </div>
   </section>
- 
+
   <section class="products">
     <div class="products__inner">
       <div id="wishlistContainer">
@@ -105,40 +121,41 @@
       </div>
     </div>
   </section>
- 
+
   <footer class="site-footer">
-      <div class="footer-container">
-          <div class="footer-column footer-brand">
-              <h2 class="footer-logo">Funiro.</h2>
-              <address>
-                  400 University Drive Suite 200 Coral Gables,<br>
-                  FL 33134 USA
-              </address>
-          </div>
-          <div class="footer-column footer-links">
-              <h3 class="footer-title">Links</h3>
-              <ul>
-                  <li><a href="homepage.html">Home</a></li>
-                  <li><a href="Shop.html">Shop</a></li>
-                  <li><a href="About.html">About</a></li>
-                  <li><a href="contact.html">Contact</a></li>
-              </ul>
-          </div>
-          <div class="footer-column footer-newsletter">
-              <h3 class="footer-title">Newsletter</h3>
-              <form class="newsletter-form">
-                  <input type="email" placeholder="Enter Your Email Address" required>
-                  <button type="submit">SUBSCRIBE</button>
-              </form>
-          </div>
+    <div class="footer-container">
+      <div class="footer-column footer-brand">
+        <h2 class="footer-logo">Funiro.</h2>
+        <address>
+          400 University Drive Suite 200 Coral Gables,<br>
+          FL 33134 USA
+        </address>
       </div>
-      <div class="footer-bottom">
-          <div class="bottom-border"></div>
-          <p>2023 furino. All rights reserved</p>
+      <div class="footer-column footer-links">
+        <h3 class="footer-title">Links</h3>
+        <ul>
+          <li><a href="homepage.html">Home</a></li>
+          <li><a href="Shop.html">Shop</a></li>
+          <li><a href="About.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </div>
+      <div class="footer-column footer-newsletter">
+        <h3 class="footer-title">Newsletter</h3>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter Your Email Address" required>
+          <button type="submit">SUBSCRIBE</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="bottom-border"></div>
+      <p>2023 furino. All rights reserved</p>
+    </div>
   </footer>
- 
-  <script src="../sources/products.js"></script>
+
+  <script src="../products-data.js"></script>
+  <script src="../cart-handler.js"></script>
   <script src="../wishlist.js"></script>
   <script src="../expand-search.js"></script>
   <script>
@@ -155,4 +172,5 @@
     })();
   </script>
 </body>
+
 </html>
